@@ -16,9 +16,8 @@ public class GlobalExceptionHandelrMiddleware(RequestDelegate next)
 		}
 		catch (Exception)
 		{
-			//Todo
-			//httpContext.Response.Redirect
-			//	(location: "/Errors/Error", permanent: false);
+			httpContext.Response.Redirect
+				(location: "/Errors/Error", permanent: false);
 		}
 	}
 }

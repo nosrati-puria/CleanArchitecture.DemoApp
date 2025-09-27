@@ -14,13 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace API;
-
 internal static class Program
 {
-    static Program()
-    {
-    }
-
     private static async Task Main()
     {
         var webApplication = new WebApplicationOptions
@@ -35,7 +30,6 @@ internal static class Program
         // Add services to the container.
         builder.Services.AddControllers();
 
-        // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
         builder.Services.AddOpenApi();
@@ -106,7 +100,6 @@ internal static class Program
 
         var app = builder.Build();
 
-
         //using (var scope = app.Services.CreateScope())
         //{
         //	var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
@@ -126,7 +119,6 @@ internal static class Program
             app.UseHsts();
         }
 
-
         app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseRouting();
@@ -140,6 +132,7 @@ internal static class Program
         app.MapControllers();
 
 
-        await app.RunAsync();
+        await
+            app.RunAsync();
     }
 }
