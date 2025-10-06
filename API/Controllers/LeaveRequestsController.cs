@@ -6,28 +6,30 @@ namespace API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class LeaveRequestsController(
-    IEmployeeRepository employeeRepository,
-    ILeaveRequestService leaveRequestService,
-    ILeaveRequestRepository leaveRequestRepository
-    ) : ControllerBase
+public class LeaveRequestsController
+    //(
+    //IEmployeeRepository employeeRepository,
+    //ILeaveRequestService leaveRequestService,
+    //ILeaveRequestRepository leaveRequestRepository
+    //)
+    : ControllerBase
 {
-    private readonly ILeaveRequestService
-        _leaveRequestService = leaveRequestService;
+    //private readonly ILeaveRequestService
+    //    _leaveRequestService = leaveRequestService;
 
-    private readonly IEmployeeRepository
-        _employeeRepository = employeeRepository;
+    //private readonly IEmployeeRepository
+    //    _employeeRepository = employeeRepository;
 
-    private readonly ILeaveRequestRepository
-        _leaveRequestRepository = leaveRequestRepository;
+    //private readonly ILeaveRequestRepository
+    //    _leaveRequestRepository = leaveRequestRepository;
 
-    [HttpGet]
-    public IActionResult GetList()
+	[HttpGet(Name = nameof(GetList))]
+	public IActionResult GetList()
     {
-        var x = _leaveRequestService.GetAllAsync();
-        var a = _leaveRequestRepository.GetAllAsync();
-        var b = _employeeRepository.GetAllAsync();
+        //var x = _leaveRequestService.GetAllAsync();
+        //var a = _leaveRequestRepository.GetAllAsync();
+        //var b = _employeeRepository.GetAllAsync();
 
-        return Ok(x);
+        return Ok();
     }
 }

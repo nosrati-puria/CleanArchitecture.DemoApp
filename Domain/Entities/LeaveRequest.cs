@@ -7,19 +7,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities;
 
-public class LeaveRequest
+public class LeaveRequest() : Seedwork.BaseEntity
 {
-	/// <summary>
-	/// شناسه
-	/// </summary>
-	[Key]
-	[Required
-		(AllowEmptyStrings = false,
-		ErrorMessageResourceType = typeof(Validations),
-		ErrorMessageResourceName = nameof(Validations.Required))]
-	[DatabaseGenerated(databaseGeneratedOption: DatabaseGeneratedOption.None)]
-	public Guid Id { get; set; }
-
+	#region EmployeeId
 
 	/// <summary>
 	/// شناسه کارمندی
@@ -32,6 +22,11 @@ public class LeaveRequest
 	public Guid EmployeeId { get; set; }
 	public virtual Employee? Employee { get; set; } = null!;
 
+	#endregion EmployeeId
+
+	//*************************
+
+	#region FromDate
 
 	/// <summary>
 	/// از تاریخِ
@@ -43,6 +38,11 @@ public class LeaveRequest
 	[DatabaseGenerated(databaseGeneratedOption: DatabaseGeneratedOption.None)]
 	public DateTime FromDate { get; set; }
 
+	#endregion /FromDate
+
+	//*************************
+
+	#region ToDate
 
 	/// <summary>
 	/// تا تاریخِ
@@ -54,9 +54,14 @@ public class LeaveRequest
 	[DatabaseGenerated(databaseGeneratedOption: DatabaseGeneratedOption.None)]
 	public DateTime ToDate { get; set; }
 
+	#endregion /ToDate
+
+	//*************************
+
+	#region Reason
 
 	/// <summary>
-	/// علت
+	/// علت مرخصی
 	/// </summary>
 	[Required
 		(AllowEmptyStrings = false,
@@ -69,6 +74,11 @@ public class LeaveRequest
 		ErrorMessageResourceName = nameof(Validations.StringLength))]
 	public string Reason { get; set; } = null!;
 
+	#endregion /Reason
+
+	//*************************
+
+	#region Status
 
 	/// <summary>
 	/// وضعیت
@@ -79,9 +89,17 @@ public class LeaveRequest
 		ErrorMessageResourceName = nameof(Validations.Required))]
 	public LeaveStatus Status { get; set; } = LeaveStatus.Pending;
 
+	#endregion /Status
 
+	//*************************
+
+	#region SubstituteEmployeeId
 	/// <summary>
 	/// کارمند جایگزین
 	/// </summary>
 	public Guid? SubstituteEmployeeId { get; set; }
+
+	#endregion /SubstituteEmployeeId
+
+	//*************************
 }

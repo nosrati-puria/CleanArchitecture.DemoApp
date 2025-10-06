@@ -41,7 +41,6 @@ public class LeaveRequestService(ILeaveRequestRepository leaveRequestRepo) : ILe
 
         var entity = new LeaveRequest
         {
-            Id = Guid.NewGuid(),
             EmployeeId = dto.EmployeeId,
             FromDate = dto.FromDate,
             ToDate = dto.ToDate,

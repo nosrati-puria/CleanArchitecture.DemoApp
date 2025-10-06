@@ -3,16 +3,17 @@ using System.Text;
 using System.Security.Claims;
 using Domain.Shared.Resources;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Configuration;
 
 namespace API.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
-[Authorize]
 public class AuthController : ControllerBase
 {
 	private readonly IConfiguration _configuration;
@@ -22,7 +23,9 @@ public class AuthController : ControllerBase
 		_configuration = configuration;
 	}
 
-	[HttpPost("login")]
+	[HttpPost(Name = nameof(Login))]
+	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LoginResponse))]
 	public IActionResult Login([FromBody] LoginModel model)
 	{
 		if (model.Username != "admin" || model.Password != "admin")
@@ -67,6 +70,11 @@ public class AuthController : ControllerBase
 
 public class LoginModel
 {
-	public string Username { get; set; }
-	public string Password { get; set; }
+	public string? Username { get; set; }
+	public string? Password { get; set; }
+}
+
+public class LoginResponse
+{
+	public string Token { get; set; } = string.Empty;
 }

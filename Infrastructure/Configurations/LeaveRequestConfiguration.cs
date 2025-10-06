@@ -4,16 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Configurations;
 
-internal class LeaveRequestConfiguration() : IEntityTypeConfiguration<LeaveRequest>
+internal class LeaveRequestConfiguration() : BaseConfiguration<LeaveRequest>
 {
-	public void Configure(EntityTypeBuilder<LeaveRequest> builder)
+	public override void Configure(EntityTypeBuilder<LeaveRequest> builder)
 	{
-		#region Id
-		builder
-			.HasKey(current => current.Id)
-			.IsClustered(clustered: false)
-		;
-		#endregion /Id
+		base.Configure(builder);
 
 		//***********************************************
 

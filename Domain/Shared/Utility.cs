@@ -3,17 +3,39 @@
 public static class Utility
 {
 	#region Static Constructor
+
 	static Utility()
 	{
 	}
+
 	#endregion /Static Constructor
 
+	//*************************
+
 	#region Consts
+
 	public abstract class Const
 	{
+		#region Constructor
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
 		private Const()
 		{
 		}
+
+		#endregion /Constructor
+
+		public const byte AgeMinLength = 0;
+
+		public const byte AgeMaxLength = 120;
+
+		public const int EmailMaxLength = 100;
+
+		public const int ReasonMinLength = 10;
+
+		public const int ReasonMaxLength = 3000;
 
 		public const byte UsernameMinLength = 3;
 
@@ -31,30 +53,32 @@ public static class Utility
 
 		public const byte FullNameMaxLength = 100;
 
-		public const byte AgeMaxLength = 120;
-
-		public const byte AgeMinLength = 0;
-
 		public const int DescriptionMaxLength = 500;
 
-		public const int EmailMaxLength = 100;
-
-		public const int ReasonMinLength = 10;
-
-		public const int ReasonMaxLength = 3000;
 
 		public const string DefaultConnection = "DefaultConnection";
 	}
 	#endregion /Consts
 
+	//*************************
+
 	#region Regex
 	public abstract class Regex
 	{
+		#region Constructor
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
 		private Regex()
 		{
 		}
 
+		#endregion /Constructor
+
 		public const string Email = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
 	}
 	#endregion /Regex
+
+	//*************************
 }

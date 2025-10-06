@@ -4,18 +4,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Configurations;
 
-internal class EmployeeConfiguration() : IEntityTypeConfiguration<Employee>
+internal class EmployeeConfiguration() : BaseConfiguration<Employee>
 {
-	public void Configure(EntityTypeBuilder<Employee> builder)
+	public override void Configure(EntityTypeBuilder<Employee> builder)
 	{
-		#region Id
-		builder
-			.HasKey(current => current.Id)
-			.IsClustered(clustered: false)
-		;
-		#endregion /Id
+		base.Configure(builder);
 
-		//***********************************************
+		//*************************
 
 		#region FullName
 		builder
@@ -33,7 +28,7 @@ internal class EmployeeConfiguration() : IEntityTypeConfiguration<Employee>
 		;
 		#endregion /FullName
 
-		//***********************************************
+		//*************************
 
 		#region Email
 		builder
@@ -42,6 +37,6 @@ internal class EmployeeConfiguration() : IEntityTypeConfiguration<Employee>
 		;
 		#endregion /Email
 
-		//***********************************************
+		//*************************
 	}
 }

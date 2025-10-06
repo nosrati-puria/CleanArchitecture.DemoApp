@@ -1,24 +1,12 @@
-﻿using System;
-using Domain.Shared;
+﻿using Domain.Shared;
 using System.Collections.Generic;
 using Domain.Shared.Resources.Messages;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities;
-public class Employee
+public class Employee() : Seedwork.BaseEntity
 {
-	/// <summary>
-	/// شناسه
-	/// </summary>
-	[Key]
-	[Required
-		(AllowEmptyStrings = false,
-		ErrorMessageResourceType = typeof(Validations),
-		ErrorMessageResourceName = nameof(Validations.Required))]
-	[DatabaseGenerated(databaseGeneratedOption: DatabaseGeneratedOption.None)]
-	public Guid Id { get; set; }
-
+	#region FullName
 
 	/// <summary>
 	/// نام و نام خانوادگی
@@ -35,6 +23,11 @@ public class Employee
 	[Display(Name = nameof(Shared.Resources.DataDictionary.FullName))]
 	public string FullName { get; set; } = null!;
 
+	#endregion /FullName
+
+	//*************************
+
+	#region Email
 
 	/// <summary>
 	/// ایمیل
@@ -51,9 +44,18 @@ public class Employee
 	[Display(Name = nameof(Shared.Resources.DataDictionary.EmailAddress))]
 	public string Email { get; set; } = null!;
 
+	#endregion /Email
+
+	//*************************
+
+	#region LeaveRequests
 
 	/// <summary>
 	/// درخواست مرخصی
 	/// </summary>
 	public ICollection<LeaveRequest> LeaveRequests { get; } = [];
+
+	#endregion /LeaveRequests
+
+	//*************************
 }

@@ -16,123 +16,112 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 namespace API;
 internal static class Program
 {
-    private static async Task Main()
-    {
-        var webApplication = new WebApplicationOptions
-        {
-            EnvironmentName = Environments.Development
-            //EnvironmentName = Environments.Production
-        };
+	private static async Task Main()
+	{
+		var webApplication = new WebApplicationOptions
+		{
+			EnvironmentName = Environments.Development
+			//EnvironmentName = Environments.Production
+		};
 
-        var builder = WebApplication.CreateBuilder(options: webApplication);
+		var builder = WebApplication.CreateBuilder(options: webApplication);
 
-
-        // Add services to the container.
-        builder.Services.AddControllers();
-
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
-        builder.Services.AddOpenApi();
+		// Add services to the container.
+		builder.Services.AddControllers();
+		builder.Services.AddEndpointsApiExplorer();
+		builder.Services.AddSwaggerGen();
+		builder.Services.AddOpenApi();
 
 
-        builder.Services.Configure
-            <RequestLocalizationOptions>(option =>
-            {
-                var supportedCultures = new[]
-                {
-                new CultureInfo(name: "fa-IR"),
-                new CultureInfo(name: "en-US"),
-            };
+		builder.Services.Configure
+			<RequestLocalizationOptions>(option =>
+			{
+				var supportedCultures = new[]
+				{
+				new CultureInfo(name: "fa-IR"),
+				new CultureInfo(name: "en-US"),
+			};
 
-                option.SupportedCultures = supportedCultures;
-                option.SupportedUICultures = supportedCultures;
+				option.SupportedCultures = supportedCultures;
+				option.SupportedUICultures = supportedCultures;
 
-                option.DefaultRequestCulture =
-                    new RequestCulture(culture: "en-US", uiCulture: "en-US");
-            });
-
-
-        builder.Services.AddDbContext<AppDbContext>(option =>
-            option.UseSqlServer(builder.Configuration
-                .GetConnectionString(name: nameof(Domain.Shared.Utility.Const.DefaultConnection))
-                )
-            )
-        ;
+				option.DefaultRequestCulture =
+					new RequestCulture(culture: "en-US", uiCulture: "en-US");
+			});
 
 
-        builder.Services
-            .AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
+		builder.Services
+			.AddDbContext<AppDbContext>(option =>
+				 option.UseSqlServer(builder.Configuration
+					 .GetConnectionString(name: nameof(Domain.Shared.Utility.Const.DefaultConnection))));
 
-                    ValidateAudience = true,
-                    ValidAudience = builder.Configuration["Jwt:Audience"],
+		builder.Services
+			.AddAuthentication(options =>
+			{
+				options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+				options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+			})
+			.AddJwtBearer(options =>
+			{
+				options.TokenValidationParameters = new TokenValidationParameters
+				{
+					ValidateIssuer = true,
+					ValidIssuer = builder.Configuration["Jwt:Issuer"],
 
-                    ValidateIssuerSigningKey = true,
+					ValidateAudience = true,
+					ValidAudience = builder.Configuration["Jwt:Audience"],
 
-                    IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]!)
-                    ),
+					ValidateIssuerSigningKey = true,
 
-                    ValidateLifetime = true,
+					IssuerSigningKey = new SymmetricSecurityKey(
+						Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]!)
+					),
 
-                    ClockSkew = TimeSpan.Zero
-                };
+					ValidateLifetime = true,
 
-                options.Events = new JwtBearerEvents
-                {
-                    OnAuthenticationFailed = context =>
-                    {
-                        return Task.CompletedTask;
-                    }
-                };
-            })
-        ;
+					ClockSkew = TimeSpan.Zero
+				};
 
+				options.Events = new JwtBearerEvents
+				{
+					OnAuthenticationFailed = context =>
+					{
+						return Task.CompletedTask;
+					}
+				};
+			});
 
-        var app = builder.Build();
+		var app = builder.Build();
 
-        //using (var scope = app.Services.CreateScope())
-        //{
-        //	var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        //	await appDbContext.Database.MigrateAsync();
-        //}
+		using (var scope = app.Services.CreateScope())
+		{
+			var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+			await appDbContext.Database.MigrateAsync();
+		}
 
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseDeveloperExceptionPage();
-            app.UseSwagger();
-            app.UseSwaggerUI();
-            app.MapOpenApi();
-        }
-        else
-        {
-            //app.UseExceptionHandler("/Errors/Error");
-            app.UseHsts();
-        }
+		if (app.Environment.IsDevelopment())
+		{
+			app.UseDeveloperExceptionPage();
+			app.UseSwagger();
+			app.UseSwaggerUI();
+			app.MapOpenApi();
+		}
+		else
+		{
+			app.UseExceptionHandler("/Errors/Error");
+			app.UseHsts();
+		}
 
-        app.UseHttpsRedirection();
-        app.UseStaticFiles();
-        app.UseRouting();
+		app.UseHttpsRedirection();
+		app.UseStaticFiles();
+		app.UseRouting();
+		app.UseAuthentication();
+		app.UseAuthorization();
+		app.UseCultureCookie();
+		app.UseGlobalException();
+		app.MapControllers();
 
-        app.UseAuthentication();
-        app.UseAuthorization();
-
-        app.UseCultureCookie();
-        app.UseGlobalException();
-
-        app.MapControllers();
-
-
-        await
-            app.RunAsync();
-    }
+		await
+			app.RunAsync();
+	}
 }

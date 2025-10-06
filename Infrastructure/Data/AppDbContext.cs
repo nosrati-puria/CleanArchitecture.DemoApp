@@ -14,12 +14,10 @@ public class AppDbContext : DbContext
 	#endregion /Constructor
 
 
-
 	#region Properties
 	public DbSet<Employee> Employees { get; set; } = null!;
 	public DbSet<LeaveRequest> LeaveRequests { get; set; } = null!;
 	#endregion /Properties
-
 
 
 	#region Methods
@@ -38,11 +36,12 @@ public class AppDbContext : DbContext
 		modelBuilder
 			.Entity<LeaveRequest>(entity =>
 			{
-				entity.HasKey(l => l.Id);
+				entity.HasKey(leaveRequest => leaveRequest.Id);
+
 				entity
-				  .HasOne(l => l.Employee)
-				  .WithMany(e => e.LeaveRequests)
-				  .HasForeignKey(l => l.EmployeeId);
+				  .HasOne(leaveRequest => leaveRequest.Employee)
+				  .WithMany(employee => employee.LeaveRequests)
+				  .HasForeignKey(leaveRequest => leaveRequest.EmployeeId);
 			});
 	}
 	#endregion /Methods
