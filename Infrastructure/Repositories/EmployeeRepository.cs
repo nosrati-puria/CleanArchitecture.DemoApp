@@ -10,10 +10,14 @@ namespace Infrastructure.Repositories;
 
 public class EmployeeRepository(AppDbContext appDbContext) : IEmployeeRepository
 {
+	#region Properties
+
 	private readonly AppDbContext _appDbContext = appDbContext;
 
+	#endregion /Properties
 
 	#region Methods
+
 	public async Task SaveChangesAsync()
 	{
 		await _appDbContext.SaveChangesAsync();
@@ -21,7 +25,7 @@ public class EmployeeRepository(AppDbContext appDbContext) : IEmployeeRepository
 
 	public async Task AddAsync(Employee employee)
 	{
-		await _appDbContext.Employees.AddAsync(employee);
+		await _appDbContext.Employees.AddAsync(entity: employee);
 	}
 
 	public async Task<List<Employee>> GetAllAsync()
@@ -39,5 +43,6 @@ public class EmployeeRepository(AppDbContext appDbContext) : IEmployeeRepository
 				.Include(current => current.LeaveRequests)
 				.FirstOrDefaultAsync(current => current.Id == id);
 	}
+
 	#endregion /Methods
 }

@@ -1,4 +1,6 @@
-﻿using Domain.Entities;
+﻿using Domain.Shared;
+using Domain.Entities;
+using Domain.Shared.Resources;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -15,17 +17,17 @@ internal class EmployeeConfiguration() : BaseConfiguration<Employee>
 		#region FullName
 		builder
 			.Property(current => current.FullName)
-			.HasColumnName(name: nameof(Domain.Shared.Resources.DataDictionary.FullName))
-			.IsRequired(required: true)
 			.IsUnicode(unicode: true)
+			.IsRequired(required: true)
 			.IsFixedLength(fixedLength: false)
-			.HasMaxLength(maxLength: Domain.Shared.Utility.Const.FullNameMaxLength)
-		;
+			.HasColumnName(name: nameof(DataDictionary.FullName))
+			.HasMaxLength(maxLength: Utility.Const.FullNameMaxLength)
+			;
 
 		builder
 			.HasIndex(current => current.FullName)
 			.IsUnique(unique: true)
-		;
+			;
 		#endregion /FullName
 
 		//*************************
@@ -34,7 +36,21 @@ internal class EmployeeConfiguration() : BaseConfiguration<Employee>
 		builder
 			.Property(current => current.Email)
 			.IsRequired(required: true)
-		;
+			.HasMaxLength(Utility.Const.EmailMaxLength)
+			.HasColumnName(name: nameof(DataDictionary.EmailAddress))
+			;
+
+		builder
+			.HasIndex(current => current.Email)
+			.IsUnique(unique: true)
+			;
+
+		builder
+			.HasMany(current => current.LeaveRequests)
+			.WithOne(other => other.Employee)
+			.HasForeignKey(current => current.EmployeeId)
+			;
+
 		#endregion /Email
 
 		//*************************

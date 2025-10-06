@@ -12,18 +12,19 @@ internal class BaseConfiguration<T> : IEntityTypeConfiguration<T>
 	{
 		#region Id
 		builder
-			.HasKey(nameof(BaseEntity.Id))
+			.HasKey(propertyNames: nameof(BaseEntity.Id))
 			.IsClustered(clustered: false)
-		;
+			;
 		#endregion /Id
 
 		//*************************
 
 		#region InsertDateTime
 		builder
-			.Property(nameof(BaseEntity.InsertDateTime))
+			.Property(propertyName: nameof(BaseEntity.InsertDateTime))
 			.HasColumnName(name: nameof(DataDictionary.InsertDateTime))
-		;
+			.IsRequired(required: true)
+			;
 		#endregion /InsertDateTime
 	}
 }

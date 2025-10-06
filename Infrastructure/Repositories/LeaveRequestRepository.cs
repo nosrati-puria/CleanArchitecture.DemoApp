@@ -11,10 +11,14 @@ namespace Infrastructure.Repositories;
 
 public class LeaveRequestRepository(AppDbContext appDbContext) : ILeaveRequestRepository
 {
+	#region Properties
+
 	private readonly AppDbContext _appDbContext = appDbContext;
 
+	#endregion /Properties
 
 	#region Methods
+
 	public async Task SaveChangesAsync()
 	{
 		await _appDbContext.SaveChangesAsync();
@@ -22,22 +26,22 @@ public class LeaveRequestRepository(AppDbContext appDbContext) : ILeaveRequestRe
 
 	public async Task AddAsync(LeaveRequest leaveRequest)
 	{
-		await _appDbContext.LeaveRequests.AddAsync(leaveRequest);
+		await _appDbContext.LeaveRequests.AddAsync(entity: leaveRequest);
 	}
 
 	public async Task<LeaveRequest?> GetByIdAsync(Guid id)
 	{
 		return await
 			_appDbContext.LeaveRequests
-				.Include(l => l.Employee)
-				.FirstOrDefaultAsync(l => l.Id == id);
+				.Include(current => current.Employee)
+				.FirstOrDefaultAsync(current => current.Id == id);
 	}
 
 	public async Task<List<LeaveRequest>> GetAllAsync()
 	{
 		return await
 			_appDbContext.LeaveRequests
-				.Include(l => l.Employee)
+				.Include(current => current.Employee)
 				.ToListAsync();
 	}
 
@@ -45,9 +49,10 @@ public class LeaveRequestRepository(AppDbContext appDbContext) : ILeaveRequestRe
 	{
 		return await
 			_appDbContext.LeaveRequests
-				.Include(l => l.Employee)
-				.Where(l => l.EmployeeId == id)
+				.Include(current => current.Employee)
+				.Where(current => current.EmployeeId == id)
 				.ToListAsync();
 	}
+
 	#endregion /Methods
 }

@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Shared.Resources;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -16,7 +17,7 @@ internal class LeaveRequestConfiguration() : BaseConfiguration<LeaveRequest>
 		builder
 			.Property(current => current.EmployeeId)
 			.IsRequired(required: true)
-		;
+			;
 		#endregion /EmployeeId
 
 		//***********************************************
@@ -25,7 +26,7 @@ internal class LeaveRequestConfiguration() : BaseConfiguration<LeaveRequest>
 		builder
 			.Property(current => current.FromDate)
 			.IsRequired(required: true)
-		;
+			;
 		#endregion /FromDate
 
 		//***********************************************
@@ -34,7 +35,7 @@ internal class LeaveRequestConfiguration() : BaseConfiguration<LeaveRequest>
 		builder
 			.Property(current => current.ToDate)
 			.IsRequired(required: true)
-		;
+			;
 		#endregion /ToDate
 
 		//***********************************************
@@ -46,7 +47,7 @@ internal class LeaveRequestConfiguration() : BaseConfiguration<LeaveRequest>
 			.IsUnicode(unicode: true)
 			.IsFixedLength(fixedLength: false)
 			.HasMaxLength(maxLength: Domain.Shared.Utility.Const.ReasonMaxLength)
-		;
+			;
 		#endregion /Reason
 
 		//***********************************************
@@ -54,8 +55,8 @@ internal class LeaveRequestConfiguration() : BaseConfiguration<LeaveRequest>
 		#region Status
 		builder
 			.Property(current => current.Status)
-			.HasColumnName(name: nameof(Domain.Shared.Resources.DataDictionary.Status))
-		;
+			.HasColumnName(name: nameof(DataDictionary.Status))
+			;
 		#endregion /Status
 
 		//***********************************************

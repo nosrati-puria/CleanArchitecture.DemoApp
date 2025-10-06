@@ -7,7 +7,6 @@ namespace Application.Interfaces;
 
 public interface ILeaveRequestService
 {
-
     Task<Guid> CreateAsync(CreateLeaveRequestDto dto);
 
     Task<IEnumerable<LeaveRequestDto>> GetByEmployeeAsync(Guid employeeId);

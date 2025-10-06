@@ -1,4 +1,5 @@
 ﻿using Domain.Shared;
+using Domain.Shared.Resources;
 using System.Collections.Generic;
 using Domain.Shared.Resources.Messages;
 using System.ComponentModel.DataAnnotations;
@@ -20,7 +21,7 @@ public class Employee() : Seedwork.BaseEntity
 		MinimumLength = Utility.Const.FullNameMinLength,
 		ErrorMessageResourceType = typeof(Validations),
 		ErrorMessageResourceName = nameof(Validations.StringLength))]
-	[Display(Name = nameof(Shared.Resources.DataDictionary.FullName))]
+	[Display(Name = nameof(DataDictionary.FullName))]
 	public string FullName { get; set; } = null!;
 
 	#endregion /FullName
@@ -41,7 +42,7 @@ public class Employee() : Seedwork.BaseEntity
 		ErrorMessageResourceType = typeof(Validations),
 		ErrorMessageResourceName = nameof(Validations.EmailAddress),
 		MatchTimeoutInMilliseconds = 0)]
-	[Display(Name = nameof(Shared.Resources.DataDictionary.EmailAddress))]
+	[Display(Name = nameof(DataDictionary.EmailAddress))]
 	public string Email { get; set; } = null!;
 
 	#endregion /Email
