@@ -17,6 +17,8 @@ public class LeaveRequestRepository(AppDbContext appDbContext) : ILeaveRequestRe
 
 	#endregion /Properties
 
+	//*************************
+
 	#region Methods
 
 	public async Task SaveChangesAsync()

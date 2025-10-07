@@ -194,5 +194,25 @@ namespace Domain.Shared.Resources.Messages {
                 return ResourceManager.GetString("UserAccountIsNotActive", resourceCulture);
             }
         }
+
+		/// <summary>
+		///   Looks up a localized string similar to ToDate must be after FromDate!.
+		/// </summary>
+		public static string FromDateIsGreaterThanToDate {
+			get
+			{
+				return ResourceManager.GetString("FromDateIsGreaterThanToDate", resourceCulture);
+			}
+		}
+
+		/// <summary>
+		///   Looks up a localized string similar to Substitute is on leave during this period!.
+		/// </summary>
+		public static string UnverifiedSubstituteEmployee {
+			get
+			{
+				return ResourceManager.GetString("UnverifiedSubstituteEmployee", resourceCulture);
+			}
+		}
     }
 }

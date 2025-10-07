@@ -162,4 +162,10 @@
   <data name="UserAccountIsNotActive" xml:space="preserve">
     <value>Your account is not active!</value>
   </data>
+  <data name="FromDateIsGreaterThanToDate" xml:space="preserve">
+    <value>ToDate must be after FromDate</value>
+  </data>
+  <data name="UnverifiedSubstituteEmployee" xml:space="preserve">
+    <value>Substitute is on leave during this period!</value>
+  </data>
 </root>

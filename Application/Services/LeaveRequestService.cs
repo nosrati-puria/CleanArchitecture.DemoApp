@@ -7,107 +7,153 @@ using Domain.Interfaces;
 using Application.Interfaces;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Domain.Shared.Resources.Messages;
 
 namespace Application.Services;
 
+/// <summary>
+/// سرویس درخواست‌ها
+/// </summary>
+/// <param name="leaveRequestRepo"></param>
 public class LeaveRequestService(ILeaveRequestRepository leaveRequestRepo) : ILeaveRequestService
 {
-    private readonly ILeaveRequestRepository _leaveRequestRepo = leaveRequestRepo;
+	#region Properties
 
+	private ILeaveRequestRepository LeaveRequestRepo { get; } = leaveRequestRepo;
 
-    public async Task<Guid> CreateAsync(CreateLeaveRequestDto dto)
-    {
-        if (dto.ToDate < dto.FromDate)
-        {
-            throw new ArgumentException("ToDate must be after FromDate");
-        }
+	#endregion /Properties
 
-        if (dto.SubstituteEmployeeId.HasValue)
-        {
-            var overlaps = await _leaveRequestRepo
-                .GetByEmployeeIdAsync(dto.SubstituteEmployeeId.Value);
+	//*************************
 
-            var unVerifiedSubstitute = overlaps
-                .Any(l => l.Status != LeaveStatus.Rejected
-                    && l.FromDate <= dto.ToDate
-                    && l.ToDate >= dto.FromDate
-                );
+	#region Methods
 
-            if (unVerifiedSubstitute)
-            {
-                throw new InvalidOperationException("Substitute is on leave during this period");
-            }
-        }
+	/// <summary>
+	/// ثبت مرخصی
+	/// </summary>
+	/// <param name="request"></param>
+	/// <returns></returns>
+	/// <exception cref="ArgumentException"></exception>
+	/// <exception cref="InvalidOperationException"></exception>
+	public async Task<Guid> CreateAsync(CreateLeaveRequestDto request)
+	{
+		if (request.ToDate < request.FromDate)
+		{
+			throw new ArgumentException(nameof(Errors.FromDateIsGreaterThanToDate));
+		}
 
-        var entity = new LeaveRequest
-        {
-            EmployeeId = dto.EmployeeId,
-            FromDate = dto.FromDate,
-            ToDate = dto.ToDate,
-            Reason = dto.Reason,
-            Status = LeaveStatus.Pending,
-            SubstituteEmployeeId = dto.SubstituteEmployeeId
-        };
+		if (request.SubstituteEmployeeId.HasValue)
+		{
+			var substituteEmployeeRequests = await LeaveRequestRepo
+				.GetByEmployeeIdAsync(request.SubstituteEmployeeId.Value);
 
-        await _leaveRequestRepo.AddAsync(entity);
-        await _leaveRequestRepo.SaveChangesAsync();
+			var unverifiedSubstitute = substituteEmployeeRequests
+				.Any(current => current.Status != LeaveStatus.Rejected
+					&& current.FromDate <= request.ToDate);
 
-        return entity.Id;
-    }
+			if (unverifiedSubstitute)
+			{
+				throw new InvalidOperationException(nameof(Errors.UnverifiedSubstituteEmployee));
+			}
+		}
 
-    public async Task<IEnumerable<LeaveRequestDto>> GetByEmployeeAsync(Guid employeeId)
-    {
-        var list = await _leaveRequestRepo.GetByEmployeeIdAsync(employeeId);
+		var entity = new LeaveRequest
+		{
+			EmployeeId = request.EmployeeId,
+			FromDate = request.FromDate,
+			ToDate = request.ToDate,
+			Reason = request.Reason,
+			Status = LeaveStatus.Pending,
+			SubstituteEmployeeId = request.SubstituteEmployeeId
+		};
 
-        return list.Select(t =>
-            new LeaveRequestDto(
-                t.Id,
-                t.EmployeeId,
-                t.FromDate,
-                t.ToDate,
-                t.Reason,
-                t.Status.ToString(),
-                t.SubstituteEmployeeId
-            )
-        );
-    }
+		await LeaveRequestRepo.AddAsync(leaveRequest: entity);
+		await LeaveRequestRepo.SaveChangesAsync();
 
-    public async Task<IEnumerable<LeaveRequestDto>> GetAllAsync()
-    {
-        var list = await _leaveRequestRepo.GetAllAsync();
+		return entity.Id;
+	}
 
-        return list.Select(t =>
-            new LeaveRequestDto(
-                t.Id,
-                t.EmployeeId,
-                t.FromDate,
-                t.ToDate,
-                t.Reason,
-                t.Status.ToString(),
-                t.SubstituteEmployeeId
-            )
-        );
-    }
+	/// <summary>
+	/// پیدا کردن درخواست طبق شناسه کارمند
+	/// </summary>
+	/// <param name="employeeId"></param>
+	/// <returns></returns>
+	public async Task<IEnumerable<LeaveRequestDto>> GetByEmployeeAsync(Guid employeeId)
+	{
+		var requestsList = await
+			LeaveRequestRepo.GetByEmployeeIdAsync(employeeId);
 
-    public async Task ApproveAsync(Guid requestId)
-    {
-        var leave = await _leaveRequestRepo.GetByIdAsync(requestId)
-            ?? throw new KeyNotFoundException("Leave request not found");
+		return requestsList
+			.Select(request =>
+				new LeaveRequestDto(
+					request.Id,
+					request.EmployeeId,
+					request.FromDate,
+					request.ToDate,
+					request.Reason,
+					request.Status.ToString(),
+					request.SubstituteEmployeeId
+				)
+			);
+	}
 
-        leave.Status = LeaveStatus.Approved;
+	/// <summary>
+	/// پیدا کردن تمامی درخواست‌ها
+	/// </summary>
+	/// <returns></returns>
+	public async Task<IEnumerable<LeaveRequestDto>> GetAllAsync()
+	{
+		var requestsList = await
+			LeaveRequestRepo.GetAllAsync();
 
-        await
-            _leaveRequestRepo.SaveChangesAsync();
-    }
+		return requestsList
+			.Select(request =>
+				new LeaveRequestDto(
+					request.Id,
+					request.EmployeeId,
+					request.FromDate,
+					request.ToDate,
+					request.Reason,
+					request.Status.ToString(),
+					request.SubstituteEmployeeId
+				)
+			);
+	}
 
-    public async Task RejectAsync(Guid requestId)
-    {
-        var leave = await _leaveRequestRepo.GetByIdAsync(requestId)
-            ?? throw new KeyNotFoundException("Leave request not found");
+	/// <summary>
+	/// تایید درخواست
+	/// </summary>
+	/// <param name="requestId"></param>
+	/// <returns></returns>
+	/// <exception cref="KeyNotFoundException"></exception>
+	public async Task ApproveAsync(Guid requestId)
+	{
+		var request = await
+			LeaveRequestRepo.GetByIdAsync(requestId)
+			?? throw new KeyNotFoundException("Leave request not found");
 
-        leave.Status = LeaveStatus.Rejected;
+		request.Status = LeaveStatus.Approved;
 
-        await
-            _leaveRequestRepo.SaveChangesAsync();
-    }
+		await
+			LeaveRequestRepo.SaveChangesAsync();
+	}
+
+	/// <summary>
+	/// رد درخواست
+	/// </summary>
+	/// <param name="requestId"></param>
+	/// <returns></returns>
+	/// <exception cref="KeyNotFoundException"></exception>
+	public async Task RejectAsync(Guid requestId)
+	{
+		var request = await
+			LeaveRequestRepo.GetByIdAsync(requestId)
+			?? throw new KeyNotFoundException("Leave request not found");
+
+		request.Status = LeaveStatus.Rejected;
+
+		await
+			LeaveRequestRepo.SaveChangesAsync();
+	}
+
+	#endregion /Methods
 }
