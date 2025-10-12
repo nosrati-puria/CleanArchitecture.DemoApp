@@ -17,14 +17,19 @@ public class CultureCookieHandlerMiddleware(RequestDelegate next,
 	private readonly static string CookieName = "Culture.Cookie";
 
 	private RequestDelegate Next { get; } = next;
+
 	private RequestLocalizationOptions? RequestLocalizationOptions { get; } = requestLocalizationOptions?.Value;
 	#endregion /Fields and Properties
 
 
 	#region Methods
+	/// <summary>
+	/// Set Culture
+	/// </summary>
+	/// <param name="cultureName"></param>
 	public static void SetCulture(string? cultureName)
 	{
-		if (!string.IsNullOrWhiteSpace(cultureName))
+		if (!string.IsNullOrWhiteSpace(value: cultureName))
 		{
 			var cultureInfo =
 				new CultureInfo(name: cultureName);
@@ -34,6 +39,11 @@ public class CultureCookieHandlerMiddleware(RequestDelegate next,
 		}
 	}
 
+	/// <summary>
+	/// Create Cookies
+	/// </summary>
+	/// <param name="httpContext"></param>
+	/// <param name="cultureName"></param>
 	public static void CreateCookies(HttpContext httpContext, string cultureName)
 	{
 		var cookieOptions = new CookieOptions
@@ -59,6 +69,12 @@ public class CultureCookieHandlerMiddleware(RequestDelegate next,
 		}
 	}
 
+	/// <summary>
+	/// Get user culture base on cookie
+	/// </summary>
+	/// <param name="httpContext"></param>
+	/// <param name="supportedCultures"></param>
+	/// <returns></returns>
 	public static string? GetCultureNameByCookie
 		(HttpContext httpContext, List<string>? supportedCultures)
 	{
@@ -70,8 +86,8 @@ public class CultureCookieHandlerMiddleware(RequestDelegate next,
 		var cultureName =
 			httpContext.Request.Cookies[key: CookieName];
 
-		if (string.IsNullOrWhiteSpace(cultureName) ||
-			!supportedCultures.Contains(cultureName))
+		if (string.IsNullOrWhiteSpace(value: cultureName) ||
+			!supportedCultures.Contains(item: cultureName))
 		{
 			return null;
 		}
@@ -93,7 +109,7 @@ public class CultureCookieHandlerMiddleware(RequestDelegate next,
 		var currentCultureName =
 			GetCultureNameByCookie(httpContext, supportedCultures);
 
-		if (string.IsNullOrWhiteSpace(currentCultureName))
+		if (string.IsNullOrWhiteSpace(value: currentCultureName))
 		{
 			currentCultureName = defaultCultureName;
 		}

@@ -14,41 +14,41 @@ namespace API.Controllers;
 [Authorize]
 [ApiController]
 [Route("api/[controller]")]
-public class AuthController : ControllerBase
+public class AuthController(IConfiguration configuration) : ControllerBase
 {
-	private readonly IConfiguration _configuration;
+	private readonly IConfiguration _configuration = configuration;
 
-	public AuthController(IConfiguration configuration)
-	{
-		_configuration = configuration;
-	}
 
+	/// <summary>
+	/// Login Method
+	/// </summary>
+	/// <param name="model"></param>
+	/// <returns></returns>
 	[HttpPost(Name = nameof(Login))]
-	[ProducesResponseType(StatusCodes.Status401Unauthorized)]
-	[ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LoginResponse))]
+	[ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
+	[ProducesResponseType(statusCode: StatusCodes.Status200OK, Type = typeof(LoginResponse))]
 	public IActionResult Login([FromBody] LoginModel model)
 	{
-		if (model.Username != "admin" || model.Password != "admin")
+		if (model.Username != nameof(DataDictionary.Admin) || model.Password != nameof(DataDictionary.Admin))
 		{
 			return Unauthorized();
 		}
 
 		var claims = new[]
 		{
-			new Claim(ClaimTypes.Name, model.Username),
-			new Claim(ClaimTypes.Role, nameof(DataDictionary.Admin))
+			new Claim(type: ClaimTypes.Name, value: model.Username),
+			new Claim(type: ClaimTypes.Role, value: nameof(DataDictionary.Admin))
 		};
 
-		var issuer = _configuration["Jwt:Issuer"];
-		var audience = _configuration["Jwt:Audience"];
-		var secretKey = _configuration["Jwt:SecretKey"];
+		var issuer = _configuration[key: "Jwt:Issuer"];
+		var audience = _configuration[key: "Jwt:Audience"];
+		var secretKey = _configuration[key: "Jwt:SecretKey"];
 
 		var expiration = DateTime.UtcNow.AddMinutes(
-			_configuration.GetValue<int>("Jwt:ExpirationInMinutes")
-		);
+			_configuration.GetValue<int>(key: "Jwt:ExpirationInMinutes"));
 
-		var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey!));
-		var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+		var securityKey = new SymmetricSecurityKey(key: Encoding.UTF8.GetBytes(secretKey!));
+		var credentials = new SigningCredentials(key: securityKey, algorithm: SecurityAlgorithms.HmacSha256);
 
 		var token = new JwtSecurityToken(
 			issuer: issuer,
@@ -58,10 +58,9 @@ public class AuthController : ControllerBase
 			signingCredentials: credentials
 		);
 
-		var tokenString = new
-			JwtSecurityTokenHandler().WriteToken(token);
+		var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
 
-		return Ok(new
+		return Ok(value: new
 		{
 			Token = tokenString,
 		});

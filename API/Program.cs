@@ -16,6 +16,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 namespace API;
 internal static class Program
 {
+	/// <summary>
+	/// Main Function
+	/// </summary>
+	/// <returns></returns>
 	private static async Task Main()
 	{
 		var webApplication = new WebApplicationOptions
@@ -26,7 +30,7 @@ internal static class Program
 
 		var builder = WebApplication.CreateBuilder(options: webApplication);
 
-		// Add services to the container.
+		// Add services to the container:
 		builder.Services.AddControllers();
 		builder.Services.AddEndpointsApiExplorer();
 		builder.Services.AddSwaggerGen();
@@ -38,9 +42,9 @@ internal static class Program
 			{
 				var supportedCultures = new[]
 				{
-				new CultureInfo(name: "fa-IR"),
-				new CultureInfo(name: "en-US"),
-			};
+					new CultureInfo(name: "fa-IR"),
+					new CultureInfo(name: "en-US"),
+				};
 
 				option.SupportedCultures = supportedCultures;
 				option.SupportedUICultures = supportedCultures;
@@ -52,7 +56,7 @@ internal static class Program
 
 		builder.Services
 			.AddDbContext<AppDbContext>(option =>
-				 option.UseSqlServer(builder.Configuration
+				 option.UseSqlServer(connectionString: builder.Configuration
 					 .GetConnectionString(name: nameof(Domain.Shared.Utility.Const.DefaultConnection))));
 
 		builder.Services
@@ -73,9 +77,8 @@ internal static class Program
 
 					ValidateIssuerSigningKey = true,
 
-					IssuerSigningKey = new SymmetricSecurityKey(
-						Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]!)
-					),
+					IssuerSigningKey = new SymmetricSecurityKey(key:
+						Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]!)),
 
 					ValidateLifetime = true,
 
@@ -108,7 +111,7 @@ internal static class Program
 		}
 		else
 		{
-			app.UseExceptionHandler("/Errors/Error");
+			app.UseExceptionHandler(errorHandlingPath: "/Errors/Error");
 			app.UseHsts();
 		}
 
