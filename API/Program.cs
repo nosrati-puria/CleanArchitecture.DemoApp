@@ -14,7 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace API;
-internal static class Program
+public static class Program
 {
 	/// <summary>
 	/// Main Function
@@ -33,12 +33,11 @@ internal static class Program
 		// Add services to the container:
 		builder.Services.AddControllers();
 		builder.Services.AddEndpointsApiExplorer();
-		builder.Services.AddSwaggerGen();
+		builder.Services.AddSwaggerGen();	
 		builder.Services.AddOpenApi();
 
-
-		builder.Services.Configure
-			<RequestLocalizationOptions>(option =>
+		builder.Services
+			.Configure<RequestLocalizationOptions>(option =>
 			{
 				var supportedCultures = new[]
 				{
@@ -52,7 +51,6 @@ internal static class Program
 				option.DefaultRequestCulture =
 					new RequestCulture(culture: "en-US", uiCulture: "en-US");
 			});
-
 
 		builder.Services
 			.AddDbContext<AppDbContext>(option =>
