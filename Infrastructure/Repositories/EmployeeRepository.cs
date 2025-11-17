@@ -20,36 +20,96 @@ public class EmployeeRepository(AppDbContext appDbContext) : IEmployeeRepository
 
 	public async Task SaveChangesAsync()
 	{
-		await _appDbContext.SaveChangesAsync();
+		var entity =
+			_appDbContext.SaveChangesAsync();
+
+		await entity;
 	}
 
 	public async Task AddAsync(Employee employee)
 	{
-		await _appDbContext.Employees.AddAsync(entity: employee);
+		var entity =
+			_appDbContext.Employees.AddAsync(entity: employee);
+
+		await entity;
 	}
 
 	public async Task<List<Employee>> GetAllAsync()
 	{
-		return await
+		var emplyeesList = await
 			_appDbContext.Employees
 				.Include(current => current.LeaveRequests)
 				.ToListAsync();
+
+		return emplyeesList;
 	}
 
 	public async Task<Employee?> GetByIdAsync(Guid id)
 	{
-		return await
+		var emplyee = await
 			_appDbContext.Employees
 				.Include(current => current.LeaveRequests)
 				.FirstOrDefaultAsync(current => current.Id == id);
+
+		return emplyee;
 	}
 
 	public async Task<Employee?> GetByUsername(string username)
 	{
-		return await
+		var emplyee = await
 			_appDbContext.Employees
-				.Include(current => current.LeaveRequests)
 				.FirstOrDefaultAsync(current => current.Username == username);
+
+		return emplyee;
+	}
+
+	public async Task CreateAsync(string username, string password, Role role)
+	{
+		var employee = await
+			_appDbContext.Employees
+				.FirstOrDefaultAsync(current => current.Username == username);
+
+		if (employee is not null)
+		{
+			throw new Exception(Domain.Shared.Resources.Messages.Errors.AlreadyExists);
+		}
+
+		await AddAsync(employee!);
+		await SaveChangesAsync();
+	}
+
+	public async Task UpdateAsync(Employee employee)
+	{
+		var oldEmployee = await
+			_appDbContext.Employees
+				.FindAsync(employee.Id);
+
+		if (oldEmployee is null)
+		{
+			throw new Exception(Domain.Shared.Resources.Messages.Errors.ThereIsNotAnyDataWithThisId);
+		}
+
+		oldEmployee.Username = employee.Username;
+		oldEmployee.Password = employee.Password;
+		oldEmployee.FullName = employee.FullName;
+		oldEmployee.Email = employee.Email;
+		oldEmployee.CellPhoneNumber = employee.CellPhoneNumber;
+
+		await SaveChangesAsync();
+	}
+
+	public async Task DeleteAsync(Guid id)
+	{
+		var employee = await
+			_appDbContext.Employees
+				.FindAsync(id);
+
+		if (employee is null)
+		{
+			throw new Exception(Domain.Shared.Resources.Messages.Errors.ThereIsNotAnyDataWithThisId);
+		}
+
+		_appDbContext.Employees.Remove(entity: employee);
 	}
 
 	#endregion /Methods

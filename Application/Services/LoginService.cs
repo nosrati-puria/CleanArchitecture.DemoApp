@@ -12,10 +12,10 @@ namespace Application.Services;
 /// </summary>
 /// <param name="employeeRepository"></param>
 /// <param name="jwtService"></param>
-public class LoginService(IEmployeeRepository employeeRepository, IJwtService jwtService) : ILoginService
+public class LoginService(IEmployeeRepository employeeRepository, Domain.Interfaces.IJwtService jwtService) : ILoginService
 {
 	public IEmployeeRepository EmployeeRepo { get; } = employeeRepository;
-	public IJwtService JwtRepo { get; } = jwtService;
+	public Domain.Interfaces.IJwtService JwtRepo { get; } = jwtService;
 
 
 	public async Task<LoginResponseDto> LoginAsync(LoginRequestDto request)

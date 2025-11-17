@@ -16,4 +16,10 @@ public interface IEmployeeRepository
 	Task<Employee?> GetByIdAsync(Guid id);
 
 	Task<Employee?> GetByUsername(string username);
+
+	Task CreateAsync(string username, string password, Role role);
+
+	Task UpdateAsync(Employee employee);
+
+	Task DeleteAsync(Guid id);
 }

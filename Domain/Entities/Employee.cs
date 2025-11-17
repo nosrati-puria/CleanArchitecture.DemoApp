@@ -117,6 +117,11 @@ public class Employee() : Seedwork.BaseEntity
 	/// <summary>
 	/// نقش
 	/// </summary>
+	[Required
+		(AllowEmptyStrings = false,
+		ErrorMessageResourceType = typeof(Validations),
+		ErrorMessageResourceName = nameof(Validations.Required))]
+	[Display(Name = nameof(DataDictionary.Role))]
 	public virtual Role? Role { get; }
 	public Guid RoleId { get; set; }
 
