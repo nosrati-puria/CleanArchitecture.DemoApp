@@ -1,4 +1,6 @@
-﻿namespace Domain.Shared;
+﻿using System;
+
+namespace Domain.Shared;
 
 public static class Utility
 {
@@ -14,7 +16,7 @@ public static class Utility
 
 	#region Consts
 
-	public abstract class Const
+	public sealed class Const
 	{
 		#region Constructor
 
@@ -63,7 +65,7 @@ public static class Utility
 	//*************************
 
 	#region Regex
-	public abstract class Regex
+	public sealed class Regex
 	{
 		#region Constructor
 
@@ -76,9 +78,29 @@ public static class Utility
 
 		#endregion /Constructor
 
+		public const string CellPhoneNumber = "^(09|\\+989|00989)[0-9]{9}$";
+
 		public const string Email = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
 	}
 	#endregion /Regex
+
+	//*************************
+
+	#region PasswordHasher
+
+	public static class Hasher
+	{
+		public static string GetHash(string input)
+		{
+			var bytes = System.Text.Encoding.UTF8.GetBytes(input);
+			var hashBytes = System.Security.Cryptography.SHA256.HashData(bytes);
+			var output = Convert.ToBase64String(hashBytes);
+
+			return output;
+		}
+	}
+
+	#endregion /PasswordHasher
 
 	//*************************
 }

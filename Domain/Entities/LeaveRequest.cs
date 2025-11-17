@@ -24,7 +24,7 @@ public class LeaveRequest() : Seedwork.BaseEntity
 
 	#endregion EmployeeId
 
-	//*************************
+	//**************************************************
 
 	#region FromDate
 
@@ -35,12 +35,11 @@ public class LeaveRequest() : Seedwork.BaseEntity
 		(AllowEmptyStrings = false,
 		ErrorMessageResourceType = typeof(Validations),
 		ErrorMessageResourceName = nameof(Validations.Required))]
-	[DatabaseGenerated(databaseGeneratedOption: DatabaseGeneratedOption.None)]
 	public DateTime FromDate { get; set; }
 
 	#endregion /FromDate
 
-	//*************************
+	//**************************************************
 
 	#region ToDate
 
@@ -51,12 +50,11 @@ public class LeaveRequest() : Seedwork.BaseEntity
 		(AllowEmptyStrings = false,
 		ErrorMessageResourceType = typeof(Validations),
 		ErrorMessageResourceName = nameof(Validations.Required))]
-	[DatabaseGenerated(databaseGeneratedOption: DatabaseGeneratedOption.None)]
 	public DateTime ToDate { get; set; }
 
 	#endregion /ToDate
 
-	//*************************
+	//**************************************************
 
 	#region Reason
 
@@ -76,7 +74,7 @@ public class LeaveRequest() : Seedwork.BaseEntity
 
 	#endregion /Reason
 
-	//*************************
+	//**************************************************
 
 	#region Status
 
@@ -91,9 +89,10 @@ public class LeaveRequest() : Seedwork.BaseEntity
 
 	#endregion /Status
 
-	//*************************
+	//**************************************************
 
 	#region SubstituteEmployeeId
+
 	/// <summary>
 	/// کارمند جایگزین
 	/// </summary>
@@ -101,5 +100,5 @@ public class LeaveRequest() : Seedwork.BaseEntity
 
 	#endregion /SubstituteEmployeeId
 
-	//*************************
+	//**************************************************
 }

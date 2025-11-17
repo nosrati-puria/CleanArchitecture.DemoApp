@@ -14,4 +14,6 @@ public interface IEmployeeRepository
 	Task<List<Employee>> GetAllAsync();
 
 	Task<Employee?> GetByIdAsync(Guid id);
+
+	Task<Employee?> GetByUsername(string username);
 }

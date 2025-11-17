@@ -12,13 +12,49 @@ internal class EmployeeConfiguration() : BaseConfiguration<Employee>
 	{
 		base.Configure(builder);
 
-		//*************************
+		//**************************************************
+
+		#region Username
+
+		builder
+			.Property(current => current.Username)
+			.IsUnicode(unicode: false)
+			.IsRequired(required: true)
+			.IsFixedLength(fixedLength: false)
+			.HasColumnName(name: nameof(DataDictionary.Username))
+			.HasMaxLength(maxLength: Utility.Const.UsernameMaxLength)
+			;
+
+		builder
+			.HasIndex(current => current.Username)
+			.IsUnique(unique: true)
+			;
+
+		#endregion /Username
+
+		//**************************************************
+
+		#region Password
+
+		builder
+			.Property(current => current.Password)
+			.IsUnicode(unicode: false)
+			.IsRequired(required: true)
+			.IsFixedLength(fixedLength: false)
+			.HasColumnName(name: nameof(DataDictionary.Password))
+			.HasMaxLength(maxLength: Utility.Const.PasswordMaxLength)
+			;
+
+		#endregion /Password
+
+		//**************************************************
 
 		#region FullName
+
 		builder
 			.Property(current => current.FullName)
 			.IsUnicode(unicode: true)
-			.IsRequired(required: true)
+			.IsRequired(required: false)
 			.IsFixedLength(fixedLength: false)
 			.HasColumnName(name: nameof(DataDictionary.FullName))
 			.HasMaxLength(maxLength: Utility.Const.FullNameMaxLength)
@@ -26,16 +62,18 @@ internal class EmployeeConfiguration() : BaseConfiguration<Employee>
 
 		builder
 			.HasIndex(current => current.FullName)
-			.IsUnique(unique: true)
+			.IsUnique(unique: false)
 			;
+
 		#endregion /FullName
 
-		//*************************
+		//**************************************************
 
 		#region Email
+
 		builder
 			.Property(current => current.Email)
-			.IsRequired(required: true)
+			.IsRequired(required: false)
 			.HasMaxLength(Utility.Const.EmailMaxLength)
 			.HasColumnName(name: nameof(DataDictionary.EmailAddress))
 			;
@@ -45,14 +83,35 @@ internal class EmployeeConfiguration() : BaseConfiguration<Employee>
 			.IsUnique(unique: true)
 			;
 
+		#endregion /Email
+
+		//**************************************************
+
+		#region CellPhoneNumber
+
+		builder
+			.Property(current => current.CellPhoneNumber)
+			.IsRequired(required: false)
+			.HasColumnName(name: nameof(DataDictionary.CellPhoneNumber))
+			;
+
+		builder
+			.HasIndex(current => current.CellPhoneNumber)
+			.IsUnique(unique: true)
+			;
+
+		#endregion /CellPhoneNumber
+
+		//**************************************************
+
+		#region LeaveRequests
+
 		builder
 			.HasMany(current => current.LeaveRequests)
 			.WithOne(other => other.Employee)
 			.HasForeignKey(current => current.EmployeeId)
 			;
 
-		#endregion /Email
-
-		//*************************
+		#endregion /LeaveRequests
 	}
 }

@@ -1346,6 +1346,17 @@ namespace Domain.Shared.Resources
 		}
 
 		/// <summary>
+		///   Looks up a localized string similar to Role Name.
+		/// </summary>
+		public static string RoleName
+		{
+			get
+			{
+				return ResourceManager.GetString("RoleName", resourceCulture);
+			}
+		}
+
+		/// <summary>
 		///   Looks up a localized string similar to Roles.
 		/// </summary>
 		public static string Roles
@@ -1518,6 +1529,17 @@ namespace Domain.Shared.Resources
 			get
 			{
 				return ResourceManager.GetString("SubMenuItems", resourceCulture);
+			}
+		}
+
+		/// <summary>
+		///   Looks up a localized string similar to Substitute Employee Id.
+		/// </summary>
+		public static string SubstituteEmployeeId
+		{
+			get
+			{
+				return ResourceManager.GetString("SubstituteEmployeeId", resourceCulture);
 			}
 		}
 

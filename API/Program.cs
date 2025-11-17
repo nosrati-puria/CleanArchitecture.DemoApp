@@ -1,9 +1,12 @@
 using System;
 using System.Text;
 using API.Middlewares;
+using Domain.Interfaces;
 using Infrastructure.Data;
+using Application.Services;
 using System.Globalization;
 using System.Threading.Tasks;
+using Infrastructure.Repositories;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +36,7 @@ public static class Program
 		// Add services to the container:
 		builder.Services.AddControllers();
 		builder.Services.AddEndpointsApiExplorer();
-		builder.Services.AddSwaggerGen();	
+		builder.Services.AddSwaggerGen();
 		builder.Services.AddOpenApi();
 
 		builder.Services
@@ -91,6 +94,10 @@ public static class Program
 					}
 				};
 			});
+
+		builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+		builder.Services.AddScoped<IJwtService, JwtService>();
+		builder.Services.AddScoped<LoginService>();
 
 		var app = builder.Build();
 

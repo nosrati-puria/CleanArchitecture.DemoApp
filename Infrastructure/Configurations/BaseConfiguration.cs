@@ -11,20 +11,24 @@ internal class BaseConfiguration<T> : IEntityTypeConfiguration<T>
 	public virtual void Configure(EntityTypeBuilder<T> builder)
 	{
 		#region Id
+
 		builder
 			.HasKey(propertyNames: nameof(BaseEntity.Id))
 			.IsClustered(clustered: false)
 			;
+
 		#endregion /Id
 
 		//*************************
 
 		#region InsertDateTime
+
 		builder
 			.Property(propertyName: nameof(BaseEntity.InsertDateTime))
 			.HasColumnName(name: nameof(DataDictionary.InsertDateTime))
 			.IsRequired(required: true)
 			;
+
 		#endregion /InsertDateTime
 	}
 }

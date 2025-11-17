@@ -44,5 +44,13 @@ public class EmployeeRepository(AppDbContext appDbContext) : IEmployeeRepository
 				.FirstOrDefaultAsync(current => current.Id == id);
 	}
 
+	public async Task<Employee?> GetByUsername(string username)
+	{
+		return await
+			_appDbContext.Employees
+				.Include(current => current.LeaveRequests)
+				.FirstOrDefaultAsync(current => current.Username == username);
+	}
+
 	#endregion /Methods
 }

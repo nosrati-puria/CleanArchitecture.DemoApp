@@ -1,4 +1,5 @@
-﻿using Domain.Shared;
+﻿using System;
+using Domain.Shared;
 using Domain.Shared.Resources;
 using System.Collections.Generic;
 using Domain.Shared.Resources.Messages;
@@ -7,15 +8,53 @@ using System.ComponentModel.DataAnnotations;
 namespace Domain.Entities;
 public class Employee() : Seedwork.BaseEntity
 {
-	#region FullName
+	#region Username
 
 	/// <summary>
-	/// نام و نام خانوادگی
+	/// نام کاربری
 	/// </summary>
 	[Required
 		(AllowEmptyStrings = false,
 		ErrorMessageResourceType = typeof(Validations),
 		ErrorMessageResourceName = nameof(Validations.Required))]
+	[StringLength
+		(maximumLength: Utility.Const.UsernameMaxLength,
+		MinimumLength = Utility.Const.UsernameMinLength,
+		ErrorMessageResourceType = typeof(Validations),
+		ErrorMessageResourceName = nameof(Validations.StringLength))]
+	[Display(Name = nameof(DataDictionary.Username))]
+	public string Username { get; set; } = null!;
+
+	#endregion /Username
+
+	//**************************************************
+
+	#region Password
+
+	/// <summary>
+	/// رمز عبور
+	/// </summary>
+	[Required
+		(AllowEmptyStrings = false,
+		ErrorMessageResourceType = typeof(Validations),
+		ErrorMessageResourceName = nameof(Validations.Required))]
+	[StringLength
+		(maximumLength: Utility.Const.PasswordMaxLength,
+		MinimumLength = Utility.Const.PasswordMinLength,
+		ErrorMessageResourceType = typeof(Validations),
+		ErrorMessageResourceName = nameof(Validations.StringLength))]
+	[Display(Name = nameof(DataDictionary.Password))]
+	public string Password { get; set; } = null!;
+
+	#endregion /Password
+
+	//**************************************************
+
+	#region FullName
+
+	/// <summary>
+	/// نام و نام خانوادگی
+	/// </summary>
 	[StringLength
 		(maximumLength: Utility.Const.FullNameMaxLength,
 		MinimumLength = Utility.Const.FullNameMinLength,
@@ -26,17 +65,13 @@ public class Employee() : Seedwork.BaseEntity
 
 	#endregion /FullName
 
-	//*************************
+	//**************************************************
 
 	#region Email
 
 	/// <summary>
 	/// ایمیل
 	/// </summary>
-	[Required
-		(AllowEmptyStrings = false,
-		ErrorMessageResourceType = typeof(Validations),
-		ErrorMessageResourceName = nameof(Validations.Required))]
 	[RegularExpression
 		(pattern: Utility.Regex.Email,
 		ErrorMessageResourceType = typeof(Validations),
@@ -47,7 +82,24 @@ public class Employee() : Seedwork.BaseEntity
 
 	#endregion /Email
 
-	//*************************
+	//**************************************************
+
+	#region CellPhoneNumber
+
+	/// <summary>
+	/// شماره تلفن همراه
+	/// </summary>
+	[RegularExpression
+		(pattern: Utility.Regex.CellPhoneNumber,
+		ErrorMessageResourceType = typeof(Validations),
+		ErrorMessageResourceName = nameof(Validations.CellPhoneNumber),
+		MatchTimeoutInMilliseconds = 0)]
+	[Display(Name = nameof(DataDictionary.CellPhoneNumber))]
+	public string CellPhoneNumber { get; set; } = null!;
+
+	#endregion /CellPhoneNumber
+
+	//**************************************************
 
 	#region LeaveRequests
 
@@ -58,5 +110,18 @@ public class Employee() : Seedwork.BaseEntity
 
 	#endregion /LeaveRequests
 
-	//*************************
+	//**************************************************
+
+	#region Role
+
+	/// <summary>
+	/// نقش
+	/// </summary>
+	public virtual Role? Role { get; }
+	public Guid RoleId { get; set; }
+
+	#endregion /Role
+
+	//**************************************************
+
 }
