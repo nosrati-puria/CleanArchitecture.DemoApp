@@ -15,6 +15,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{F20EB2CE-869B-4AEE-AE65-45A4972FFB65}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{2AA2DB75-968D-4888-A2B9-35448E7186A5}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.txt = Readme.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +55,14 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4EE2A110-1081-421F-BDF4-890DFD44E955} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{8B1B57BE-7FA2-48F9-BE32-79429E1646D4} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{CD3C2A3A-A260-4810-A37D-894CF839EBC7} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{E562C88A-B4D0-4C06-B4B6-A2804FFA0FE2} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{94F59A12-11A5-441F-83A9-4E6DB50AD898} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{F20EB2CE-869B-4AEE-AE65-45A4972FFB65} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BFDB541B-B084-4DB1-9EA6-1735C3AB9BA9}
