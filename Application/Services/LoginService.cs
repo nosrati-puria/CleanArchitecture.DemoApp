@@ -1,6 +1,6 @@
 ﻿using System;
 using Domain.Shared;
-using Application.DTOs;
+using SharedKernel.DTOs;
 using Domain.Interfaces;
 using System.Threading.Tasks;
 using Application.Interfaces;

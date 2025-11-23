@@ -214,5 +214,15 @@ namespace Domain.Shared.Resources.Messages {
 				return ResourceManager.GetString("UnverifiedSubstituteEmployee", resourceCulture);
 			}
 		}
+
+		/// <summary>
+		///   Looks up a localized string similar to Server returned empty token!.
+		/// </summary>
+		public static string EmptyToken {
+			get
+			{
+				return ResourceManager.GetString("EmptyToken", resourceCulture);
+			}
+		}
     }
 }

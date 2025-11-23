@@ -1,13 +1,18 @@
 ﻿@page "/login"
-@inject NavigationManager Navigation
-@inject HttpClient Http
+
+@using SharedKernel.DTOs;
+@using Domain.Shared.Resources;
+@using Domain.Shared.Resources.Messages;
+
 @inject IJSRuntime JS
+@inject HttpClient Http
+@inject NavigationManager Navigation
 
 <h3 class="text-center mt-5">Login</h3>
 
 <div class="d-flex justify-content-center mt-4">
 	<div class="card p-4 shadow" style="width:350px;">
-		<EditForm Model="loginModel" OnValidSubmit="HandleLogin">
+		<EditForm Model="loginModel" OnValidSubmit="HandleLoginAsync">
 			<DataAnnotationsValidator />
 
 			<div class="mb-3">
@@ -31,61 +36,53 @@
 </div>
 
 @code {
-	private readonly LoginModel loginModel = new();
 	private string errorMessage = string.Empty;
+	private readonly LoginModel loginModel = new();
 
-	private async Task HandleLogin()
+	private async Task HandleLoginAsync()
 	{
-		errorMessage = string.Empty;
-
 		try
 		{
-			// دقت کن: اگر endpoint شما api/auth/login است آدرس را اصلاح کن
 			var response = await Http.PostAsJsonAsync("api/auth/login", loginModel);
 
 			if (!response.IsSuccessStatusCode)
 			{
-				// می‌تونیم پیام خطای سرور رو هم بخونیم اگر موجود بود
-				var serverMsg = await response.Content.ReadAsStringAsync();
-				errorMessage = "Invalid username or password";
-				if (!string.IsNullOrWhiteSpace(serverMsg))
-					errorMessage += $": {serverMsg}";
+				var serverMessage = await response.Content.ReadAsStringAsync();
+				errorMessage = nameof(Errors.InvalidUsernameOrPassword);
+
+				if (!string.IsNullOrWhiteSpace(serverMessage))
+				{
+					errorMessage += $": {serverMessage}";
+				}
+
 				return;
 			}
 
-			var result = await response.Content.ReadFromJsonAsync<LoginResponse>();
+			var result = await response.Content.ReadFromJsonAsync<LoginResponseDto>();
 
 			if (result is null || string.IsNullOrWhiteSpace(result.Token))
 			{
-				errorMessage = "Server returned empty token.";
+				errorMessage = Errors.EmptyToken;
 				return;
 			}
 
-			// ذخیره توکن در localStorage با JS interop
 			await JS.InvokeVoidAsync("localStorage.setItem", "jwt", result.Token);
 
-			// یا اگر Blazor Server و می‌خواهی امن‌تر باشه از ProtectedLocalStorage استفاده کن
 			Navigation.NavigateTo("/");
 		}
 		catch (JSException jsEx)
 		{
-			// خطای JS interop
-			errorMessage = "خطا در ذخیره‌سازی توکن در مرورگر: " + jsEx.Message;
+			errorMessage = $@"خطا در ذخیره‌سازی توکن در مرورگر: {jsEx.Message}";
 		}
 		catch (Exception ex)
 		{
-			errorMessage = "خطا: " + ex.Message;
+			errorMessage = $"خطا: {ex.Message}";
 		}
 	}
 
 	public class LoginModel
 	{
-		public string? Username { get; set; }
-		public string? Password { get; set; }
-	}
-
-	public class LoginResponse
-	{
-		public string Token { get; set; } = string.Empty;
+		public string Username { get; set; }
+		public string Password { get; set; }
 	}
 }

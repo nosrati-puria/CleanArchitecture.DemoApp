@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Application.DTOs;
+namespace SharedKernel.DTOs;
 
 public record LeaveRequestDto(
 	Guid Id,

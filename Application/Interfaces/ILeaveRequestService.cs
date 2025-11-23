@@ -1,5 +1,5 @@
 ﻿using System;
-using Application.DTOs;
+using SharedKernel.DTOs;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
@@ -7,7 +7,7 @@ namespace Application.Interfaces;
 
 public interface ILeaveRequestService
 {
-    Task<Guid> CreateAsync(CreateLeaveRequestDto dto);
+    Task<Guid> CreateAsync(CreateLeaveRequestDto request);
 
     Task<IEnumerable<LeaveRequestDto>> GetByEmployeeAsync(Guid employeeId);
 

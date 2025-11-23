@@ -1,4 +1,4 @@
-﻿using Application.DTOs;
+﻿using SharedKernel.DTOs;
 using System.Threading.Tasks;
 
 namespace Application.Interfaces;

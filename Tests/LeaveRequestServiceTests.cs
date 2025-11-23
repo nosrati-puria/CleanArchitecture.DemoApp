@@ -2,7 +2,7 @@
 using System;
 using Domain.Enums;
 using Domain.Entities;
-using Application.DTOs;
+using SharedKernel.DTOs;
 using Domain.Interfaces;
 using Application.Services;
 using System.Threading.Tasks;

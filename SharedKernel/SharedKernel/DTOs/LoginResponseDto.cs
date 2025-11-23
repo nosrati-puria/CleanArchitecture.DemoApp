@@ -1,4 +1,4 @@
-﻿namespace Application.DTOs;
+﻿namespace SharedKernel.DTOs;
 
 public record LoginResponseDto(
 	string Token

@@ -1,5 +1,5 @@
 ﻿using System;
-using Application.DTOs;
+using SharedKernel.DTOs;
 using Application.Interfaces;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
