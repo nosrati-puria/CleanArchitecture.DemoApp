@@ -1,3 +1,4 @@
+using Client.Settings;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -12,15 +13,17 @@ public static class Program
 	private static async Task Main(string[] args)
 	{
 		var builder = WebAssemblyHostBuilder.CreateDefault(args);
+
 		builder.RootComponents.Add<App>("#app");
 		builder.RootComponents.Add<HeadOutlet>("head::after");
 
-		var configFile = builder.Configuration;
+		var apiSettings = builder.Configuration
+			.GetSection("ApiSettings").Get<ApiSettings>();
 
-		builder.Services.AddScoped(sp =>
+		builder.Services.AddScoped(current =>
 			new HttpClient
 			{
-				BaseAddress = new Uri(configFile["ApiBaseUrl"]!)
+				BaseAddress = new Uri(uriString: apiSettings?.ServerUrl)
 			});
 
 		var app = builder.Build();
