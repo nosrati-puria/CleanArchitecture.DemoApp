@@ -1,4 +1,5 @@
 For next Step we should:
 
-1- Build Sign up page
-2- Clean Login page
+1- Fix appsetting.json in server and client side.
+2- add XML doc for dtos.
+3- add seed data for manager.
