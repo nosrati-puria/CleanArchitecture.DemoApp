@@ -16,13 +16,8 @@ public class Role() : Seedwork.BaseEntity
 		(AllowEmptyStrings = false,
 		ErrorMessageResourceType = typeof(Validations),
 		ErrorMessageResourceName = nameof(Validations.Required))]
-	[StringLength
-		(maximumLength: Utility.Const.RoleNameMaxLength,
-		MinimumLength = Utility.Const.RoleNameMinLength,
-		ErrorMessageResourceType = typeof(Validations),
-		ErrorMessageResourceName = nameof(Validations.StringLength))]
 	[Display(Name = nameof(DataDictionary.RoleName))]
-	public string Name { get; set; } = null!;
+	public Enums.RolesName Name { get; set; }
 
 	#endregion /Name
 

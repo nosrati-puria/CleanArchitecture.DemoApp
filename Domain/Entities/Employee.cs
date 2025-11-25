@@ -122,7 +122,7 @@ public class Employee() : Seedwork.BaseEntity
 		ErrorMessageResourceType = typeof(Validations),
 		ErrorMessageResourceName = nameof(Validations.Required))]
 	[Display(Name = nameof(DataDictionary.Role))]
-	public virtual Role? Role { get; }
+	public virtual Role? Role { get; set; }
 	public Guid RoleId { get; set; }
 
 	#endregion /Role

@@ -17,7 +17,7 @@ public interface IEmployeeRepository
 
 	Task<Employee?> GetByUsername(string username);
 
-	Task CreateAsync(string username, string password, Role role);
+	Task CreateAsync(Employee employee);
 
 	Task UpdateAsync(Employee employee);
 

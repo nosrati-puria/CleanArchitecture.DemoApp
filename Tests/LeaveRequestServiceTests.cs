@@ -30,13 +30,14 @@ public class LeaveRequestServiceTests
 	[Fact]
 	public async Task CreateAsync_InvalidDateRange_ThrowsArgumentException()
 	{
-		var dto = new CreateLeaveRequestDto(
-			EmployeeId: Guid.NewGuid(),
-			FromDate: DateTime.Today.AddDays(5),
-			ToDate: DateTime.Today,
-			Reason: "Test",
-			SubstituteEmployeeId: null
-		);
+		var dto = new CreateLeaveRequestDto
+		{
+			EmployeeId = Guid.NewGuid(),
+			FromDate = DateTime.Today.AddDays(5),
+			ToDate = DateTime.Today,
+			Reason = "Test",
+			SubstituteEmployeeId = null,
+		};
 
 		await Assert
 			.ThrowsAsync<ArgumentException>(() => _service.CreateAsync(dto));
@@ -57,17 +58,18 @@ public class LeaveRequestServiceTests
 						ToDate = DateTime.Today.AddDays(2),
 						Status = LeaveStatus.Pending,
 						Reason = "Overlap",
-						SubstituteEmployeeId = null
+						SubstituteEmployeeId = null,
 					}
 			]);
 
-		var dto = new CreateLeaveRequestDto(
-			EmployeeId: empId,
-			FromDate: DateTime.Today,
-			ToDate: DateTime.Today.AddDays(1),
-			Reason: "Test",
-			SubstituteEmployeeId: subId
-		);
+		var dto = new CreateLeaveRequestDto
+		{
+			EmployeeId = empId,
+			FromDate = DateTime.Today,
+			ToDate = DateTime.Today.AddDays(1),
+			Reason = "Test",
+			SubstituteEmployeeId = subId
+		};
 
 		await Assert
 			.ThrowsAsync<InvalidOperationException>(() => _service.CreateAsync(dto));
@@ -78,13 +80,14 @@ public class LeaveRequestServiceTests
 	{
 		var empId = Guid.NewGuid();
 
-		var dto = new CreateLeaveRequestDto(
-			EmployeeId: empId,
-			FromDate: DateTime.Today,
-			ToDate: DateTime.Today.AddDays(1),
-			Reason: "OK",
-			SubstituteEmployeeId: null
-		);
+		var dto = new CreateLeaveRequestDto
+		{
+			EmployeeId = empId,
+			FromDate = DateTime.Today,
+			ToDate = DateTime.Today.AddDays(1),
+			Reason = "OK",
+			SubstituteEmployeeId = null,
+		};
 
 		_leaveRepoMock
 			.Setup(r => r.GetByEmployeeIdAsync(It.IsAny<Guid>()))

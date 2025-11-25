@@ -5,6 +5,7 @@ using Domain.Interfaces;
 using Infrastructure.Data;
 using Application.Services;
 using System.Globalization;
+using Application.Interfaces;
 using System.Threading.Tasks;
 using Infrastructure.Repositories;
 using Microsoft.Extensions.Hosting;
@@ -61,6 +62,18 @@ public static class Program
 					 .GetConnectionString(name: nameof(Domain.Shared.Utility.Const.DefaultConnection))));
 
 		builder.Services
+			.AddCors(options =>
+			{
+				options.AddPolicy("AllowBlazorClient", policy =>
+				{
+					policy.WithOrigins("https://localhost:44361")
+						  .AllowAnyHeader()
+						  .AllowAnyMethod()
+						  .AllowCredentials();
+				});
+			});
+
+		builder.Services
 			.AddAuthentication(options =>
 			{
 				options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -95,9 +108,9 @@ public static class Program
 				};
 			});
 
-		builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 		builder.Services.AddScoped<IJwtService, JwtService>();
-		builder.Services.AddScoped<LoginService>();
+		builder.Services.AddScoped<ILoginService, LoginService>();
+		builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
 		var app = builder.Build();
 
@@ -121,12 +134,18 @@ public static class Program
 		}
 
 		app.UseHttpsRedirection();
+
 		app.UseStaticFiles();
+
+		app.UseCors("AllowBlazorClient");
 		app.UseRouting();
+
 		app.UseAuthentication();
 		app.UseAuthorization();
+
 		app.UseCultureCookie();
 		app.UseGlobalException();
+
 		app.MapControllers();
 
 		await

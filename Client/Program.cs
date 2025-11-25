@@ -12,28 +12,16 @@ public static class Program
 	private static async Task Main(string[] args)
 	{
 		var builder = WebAssemblyHostBuilder.CreateDefault(args);
-
 		builder.RootComponents.Add<App>("#app");
 		builder.RootComponents.Add<HeadOutlet>("head::after");
 
-		builder.Services
-			.AddScoped(options =>
-				new HttpClient
-				{
-					BaseAddress = new Uri(uriString: builder.HostEnvironment.BaseAddress)
-				}
-			);
+		var configFile = builder.Configuration;
 
-		//builder.Services.AddCors(options =>
-		//{
-		//	options.AddPolicy("AllowBlazor",
-		//		policy =>
-		//		{
-		//			policy.WithOrigins("https://localhost:7223")
-		//				  .AllowAnyHeader()
-		//				  .AllowAnyMethod();
-		//		});
-		//});
+		builder.Services.AddScoped(sp =>
+			new HttpClient
+			{
+				BaseAddress = new Uri(configFile["ApiBaseUrl"]!)
+			});
 
 		var app = builder.Build();
 

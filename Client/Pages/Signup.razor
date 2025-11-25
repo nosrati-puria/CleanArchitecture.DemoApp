@@ -1,4 +1,4 @@
-﻿@page "/login"
+﻿@page "/signup"
 
 @using SharedKernel.DTOs;
 @using Domain.Shared.Resources;
@@ -8,29 +8,39 @@
 @inject HttpClient Http
 @inject NavigationManager Navigation
 
-<h3 class="text-center mt-5">Login</h3>
+<h3 class="text-center mt-5">Sign Up</h3>
 
 <div class="d-flex justify-content-center mt-4">
 	<div class="card p-4 shadow" style="width:350px;">
-		<EditForm Model="loginModel" OnValidSubmit="HandleLoginAsync">
+		<EditForm Model="signupModel" OnValidSubmit="HandleSignupAsync">
 			<DataAnnotationsValidator />
 
 			<div class="mb-3">
 				<label class="form-label">@nameof(Domain.Entities.Employee.Username)</label>
-				<InputText @bind-Value="loginModel.Username" class="form-control" />
+				<InputText @bind-Value="signupModel.Username" class="form-control" />
 			</div>
 
 			<div class="mb-3">
 				<label class="form-label">@nameof(Domain.Entities.Employee.Password)</label>
-				<InputText @bind-Value="loginModel.Password" type="password" class="form-control" />
+				<InputText @bind-Value="signupModel.Password" type="password" class="form-control" />
 			</div>
 
-			<button type="submit" class="btn btn-primary w-100">@nameof(DataDictionary.SignIn)</button>
-
-			<div class="text-center mt-3">
-				<span>Don't have an account?</span>
-				<a href="/Signup" class="ms-1">Sign Up</a>
+			<div class="mb-3">
+				<label class="form-label">@nameof(Domain.Entities.Employee.FullName)</label>
+				<InputText @bind-Value="signupModel.FullName" class="form-control" />
 			</div>
+
+			<div class="mb-3">
+				<label class="form-label">@nameof(Domain.Entities.Employee.Email)</label>
+				<InputText @bind-Value="signupModel.Email" class="form-control" />
+			</div>
+
+			<div class="mb-3">
+				<label class="form-label">@nameof(Domain.Entities.Employee.CellPhoneNumber)</label>
+				<InputText @bind-Value="signupModel.CellPhoneNumber" class="form-control" />
+			</div>
+
+			<button type="submit" class="btn btn-primary w-100">@nameof(DataDictionary.SignUp)</button>
 		</EditForm>
 
 		@if (!string.IsNullOrEmpty(errorMessage))
@@ -42,14 +52,13 @@
 
 @code {
 	private string errorMessage = string.Empty;
-	private readonly LoginRequestDto loginModel = new();
+	private readonly SignupDto signupModel = new();
 
-	private async Task HandleLoginAsync()
+	private async Task HandleSignupAsync()
 	{
 		try
 		{
-			var response = await Http.PostAsJsonAsync("https://localhost:44325/api/Auth/Login", loginModel);
-
+			var response = await Http.PostAsJsonAsync("api/signup/register", signupModel);
 
 			if (!response.IsSuccessStatusCode)
 			{

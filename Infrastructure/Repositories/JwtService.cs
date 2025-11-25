@@ -23,7 +23,7 @@ public class JwtService(IConfiguration configuration) : IJwtService
 		var claims = new[]
 		{
 			new Claim(type: ClaimTypes.Name, value: employee.Username),
-			new Claim(type: ClaimTypes.Role, value: employee.Role?.Name!)
+			new Claim(type: ClaimTypes.Role, value: employee.Role?.Name.ToString()!)
 		};
 
 		var issuer = Configuration[key: "Jwt:Issuer"];

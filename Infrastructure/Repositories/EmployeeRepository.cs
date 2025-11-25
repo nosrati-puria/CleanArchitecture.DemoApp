@@ -63,18 +63,18 @@ public class EmployeeRepository(AppDbContext appDbContext) : IEmployeeRepository
 		return emplyee;
 	}
 
-	public async Task CreateAsync(string username, string password, Role role)
+	public async Task CreateAsync(Employee employee)
 	{
-		var employee = await
+		var alreadyExist = await
 			_appDbContext.Employees
-				.FirstOrDefaultAsync(current => current.Username == username);
+				.AnyAsync(current => current.Username == employee.Username);
 
-		if (employee is not null)
+		if (alreadyExist)
 		{
 			throw new Exception(Domain.Shared.Resources.Messages.Errors.AlreadyExists);
 		}
 
-		await AddAsync(employee!);
+		await AddAsync(employee);
 		await SaveChangesAsync();
 	}
 

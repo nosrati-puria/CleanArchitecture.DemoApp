@@ -8,15 +8,15 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers;
 
-[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class AuthController(ILoginService loginService) : ControllerBase
 {
-	public ILoginService LoginService { get; } = loginService;
+	private readonly ILoginService _loginService = loginService;
 
 
-	[HttpPost(Name = nameof(Login))]
+	[AllowAnonymous]
+	[HttpPost(template: nameof(Login))]
 	[ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
 	[ProducesResponseType(statusCode: StatusCodes.Status200OK, Type = typeof(LoginResponseDto))]
 	public async Task<IActionResult> Login([FromBody] LoginRequestDto model)
@@ -24,8 +24,12 @@ public class AuthController(ILoginService loginService) : ControllerBase
 		try
 		{
 			var result = await
-				LoginService.LoginAsync(request:
-					new LoginRequestDto(Username: model.Username, Password: model.Password));
+				_loginService.LoginAsync(request:
+					new LoginRequestDto
+					{
+						Username = model.Username,
+						Password = model.Password,
+					});
 
 			return Ok(value: result);
 		}

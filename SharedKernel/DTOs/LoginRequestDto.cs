@@ -1,6 +1,7 @@
 ﻿namespace SharedKernel.DTOs;
 
-public record LoginRequestDto(
-	string Username,
-	string Password
-);
+public record LoginRequestDto()
+{
+	public string Username { get; set; } = string.Empty;
+	public string Password { get; set; } = string.Empty;
+}

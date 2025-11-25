@@ -1,5 +1,6 @@
 ﻿namespace SharedKernel.DTOs;
 
-public record LoginResponseDto(
-	string Token
-);
+public record LoginResponseDto()
+{
+	public string Token { get; set; } = string.Empty;
+}

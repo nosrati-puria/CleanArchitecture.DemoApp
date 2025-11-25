@@ -1740,5 +1740,38 @@ namespace Domain.Shared.Resources
 				return ResourceManager.GetString("WithoutRole", resourceCulture);
 			}
 		}
+
+		/// <summary>
+		///   Looks up a localized string similar to Developer.
+		/// </summary>
+		public static string Developer
+		{
+			get
+			{
+				return ResourceManager.GetString("Developer", resourceCulture);
+			}
+		}
+
+		/// <summary>
+		///   Looks up a localized string similar to Manager.
+		/// </summary>
+		public static string Manager
+		{
+			get
+			{
+				return ResourceManager.GetString("Manager", resourceCulture);
+			}
+		}
+
+		/// <summary>
+		///   Looks up a localized string similar to Employee.
+		/// </summary>
+		public static string Employee
+		{
+			get
+			{
+				return ResourceManager.GetString("Employee", resourceCulture);
+			}
+		}
 	}
 }
