@@ -1357,6 +1357,17 @@ namespace Domain.Shared.Resources
 		}
 
 		/// <summary>
+		///   Looks up a localized string similar to Role Number.
+		/// </summary>
+		public static string RoleNumber
+		{
+			get
+			{
+				return ResourceManager.GetString("RoleNumber", resourceCulture);
+			}
+		}
+
+		/// <summary>
 		///   Looks up a localized string similar to Roles.
 		/// </summary>
 		public static string Roles

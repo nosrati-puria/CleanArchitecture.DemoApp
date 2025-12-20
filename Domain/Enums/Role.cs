@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Enums;
 
-public enum RolesName
+public enum Role
 {
 	/// <summary>
 	/// برنامه نویس

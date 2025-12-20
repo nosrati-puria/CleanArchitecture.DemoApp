@@ -11,6 +11,8 @@ internal class LeaveRequestConfiguration() : BaseConfiguration<LeaveRequest>
 	{
 		base.Configure(builder);
 
+		builder.ToTable(name: nameof(LeaveRequest), schema: "HR");
+
 		//**************************************************
 		#region EmployeeId
 

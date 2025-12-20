@@ -540,4 +540,7 @@
   <data name="Manager" xml:space="preserve">
     <value>Manager</value>
   </data>
+  <data name="RoleNumber" xml:space="preserve">
+    <value>Role Number</value>
+  </data>
 </root>

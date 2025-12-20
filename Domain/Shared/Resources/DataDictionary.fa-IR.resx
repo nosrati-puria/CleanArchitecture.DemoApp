@@ -540,4 +540,7 @@
   <data name="Manager" xml:space="preserve">
     <value>مدیر</value>
   </data>
+  <data name="RoleNumber" xml:space="preserve">
+    <value>شماره نقش</value>
+  </data>
 </root>

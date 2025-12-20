@@ -34,7 +34,7 @@ public class SignupController(IEmployeeRepository employeeRepository) : Controll
 				CellPhoneNumber = model.CellPhoneNumber,
 				Role = new Role()
 				{
-					Name = Domain.Enums.RolesName.Employee,
+					Number = Domain.Enums.Role.Employee,
 					Description = nameof(DataDictionary.Employee),
 				},
 			};

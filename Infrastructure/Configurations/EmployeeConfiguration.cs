@@ -12,6 +12,8 @@ internal class EmployeeConfiguration() : BaseConfiguration<Employee>
 	{
 		base.Configure(builder);
 
+		builder.ToTable(name: nameof(Employee), schema: "HR");
+
 		//**************************************************
 
 		#region Username

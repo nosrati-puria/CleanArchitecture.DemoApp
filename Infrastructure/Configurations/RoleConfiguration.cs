@@ -12,22 +12,35 @@ internal class RoleConfiguration() : BaseConfiguration<Role>
 	{
 		base.Configure(builder);
 
+		builder.ToTable(name: nameof(Role), schema: "HR");
+
+		//**************************************************
+
+		#region Number
+
+		builder
+			.Property(current => current.Number)
+			.IsRequired(required: true)
+			.HasColumnName(name: nameof(DataDictionary.RoleNumber))
+			;
+
+		builder
+			.HasIndex(current => current.Number)
+			.IsClustered(clustered: false)
+			;
+
+		#endregion /Number
+
 		//**************************************************
 
 		#region Name
 
 		builder
-			.Property(current => current.Name)
+			.Property(current => current.Number)
 			.IsUnicode(unicode: false)
-			.IsRequired(required: true)
 			.IsFixedLength(fixedLength: false)
 			.HasColumnName(name: nameof(DataDictionary.RoleName))
 			.HasMaxLength(maxLength: Utility.Const.RoleNameMaxLength)
-			;
-
-		builder
-			.HasIndex(current => current.Name)
-			.IsUnique(unique: true)
 			;
 
 		#endregion /Name

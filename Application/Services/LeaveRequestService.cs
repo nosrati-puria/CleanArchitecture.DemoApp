@@ -84,15 +84,16 @@ public class LeaveRequestService(ILeaveRequestRepository leaveRequestRepo) : ILe
 
 		return requestsList
 			.Select(request =>
-				new LeaveRequestDto(
-					request.Id,
-					request.EmployeeId,
-					request.FromDate,
-					request.ToDate,
-					request.Reason,
-					request.Status.ToString(),
-					request.SubstituteEmployeeId
-				)
+				new LeaveRequestDto
+				{
+					Id = request.Id,
+					EmployeeId = request.EmployeeId,
+					FromDate = request.FromDate,
+					ToDate = request.ToDate,
+					Reason = request.Reason,
+					Status = request.Status.ToString(),
+					SubstituteEmployeeId = request.SubstituteEmployeeId
+				}
 			);
 	}
 
@@ -107,15 +108,16 @@ public class LeaveRequestService(ILeaveRequestRepository leaveRequestRepo) : ILe
 
 		return requestsList
 			.Select(request =>
-				new LeaveRequestDto(
-					request.Id,
-					request.EmployeeId,
-					request.FromDate,
-					request.ToDate,
-					request.Reason,
-					request.Status.ToString(),
-					request.SubstituteEmployeeId
-				)
+				new LeaveRequestDto
+				{
+					Id = request.Id,
+					EmployeeId = request.EmployeeId,
+					FromDate = request.FromDate,
+					ToDate = request.ToDate,
+					Reason = request.Reason,
+					Status = request.Status.ToString(),
+					SubstituteEmployeeId = request.SubstituteEmployeeId
+				}
 			);
 	}
 

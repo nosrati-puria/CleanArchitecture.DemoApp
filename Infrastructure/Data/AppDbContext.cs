@@ -56,6 +56,28 @@ public class AppDbContext : DbContext
 				  .WithMany(employee => employee.LeaveRequests)
 				  .HasForeignKey(leaveRequest => leaveRequest.EmployeeId);
 			});
+
+		var role = new Role
+		{
+			Number = Domain.Enums.Role.Manager,
+			Description = "Seed data for manager",
+		};
+
+		modelBuilder
+			.Entity<Role>()
+			.HasData(role);
+
+		modelBuilder
+			.Entity<Employee>()
+			.HasData(new Employee
+			{
+				Username = "puria.nosrati",
+				Password = "12345678",
+				FullName = "Puria Nosrati",
+				Email = "nosrati.puria@gmail.com",
+				CellPhoneNumber = "09356685894",
+				RoleId = role.Id,
+			});
 	}
 
 	#endregion /Methods
