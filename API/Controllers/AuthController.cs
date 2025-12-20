@@ -21,21 +21,19 @@ public class AuthController(ILoginService loginService) : ControllerBase
 	[ProducesResponseType(statusCode: StatusCodes.Status200OK, Type = typeof(LoginResponseDto))]
 	public async Task<IActionResult> Login([FromBody] LoginRequestDto model)
 	{
-		try
-		{
-			var result = await
-				_loginService.LoginAsync(request:
-					new LoginRequestDto
-					{
-						Username = model.Username,
-						Password = model.Password,
-					});
+		var result = await
+			_loginService.LoginAsync(request:
+				new LoginRequestDto
+				{
+					Username = model.Username,
+					Password = model.Password,
+				});
 
-			return Ok(value: result);
-		}
-		catch (Exception)
+		if (!result.IsSuccess)
 		{
-			return Unauthorized();
+			return StatusCode(result.StatusCode, new { message = result.Message });
 		}
+
+		return Ok(result.Data);
 	}
 }

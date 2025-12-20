@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Domain.Shared;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data;
@@ -72,7 +73,7 @@ public class AppDbContext : DbContext
 			.HasData(new Employee
 			{
 				Username = "puria.nosrati",
-				Password = "12345678",
+				Password = Utility.Hasher.GetHash(input: "12345678"),
 				FullName = "Puria Nosrati",
 				Email = "nosrati.puria@gmail.com",
 				CellPhoneNumber = "09356685894",

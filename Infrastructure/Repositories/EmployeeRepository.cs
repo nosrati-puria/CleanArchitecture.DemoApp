@@ -58,6 +58,7 @@ public class EmployeeRepository(AppDbContext appDbContext) : IEmployeeRepository
 	{
 		var emplyee = await
 			_appDbContext.Employees
+				.Include(current => current.Role)
 				.FirstOrDefaultAsync(current => current.Username == username);
 
 		return emplyee;

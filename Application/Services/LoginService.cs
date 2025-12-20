@@ -1,9 +1,10 @@
-﻿using System;
+﻿using SharedKernel;
 using Domain.Shared;
 using SharedKernel.DTOs;
 using Domain.Interfaces;
 using System.Threading.Tasks;
 using Application.Interfaces;
+using Domain.Shared.Resources.Messages;
 
 namespace Application.Services;
 
@@ -18,19 +19,14 @@ public class LoginService(IEmployeeRepository employeeRepository, IJwtService jw
 	public IJwtService JwtRepo { get; } = jwtService;
 
 
-	public async Task<LoginResponseDto> LoginAsync(LoginRequestDto request)
+	public async Task<ServiceResult<LoginResponseDto>> LoginAsync(LoginRequestDto request)
 	{
 		var employee = await
 			EmployeeRepo.GetByUsername(username: request.Username);
 
-		if (employee is null)
+		if (employee is null || !CheckPassword(inputPlainText: request.Password, storedHashedPassword: employee.Password))
 		{
-			throw new Exception(Domain.Shared.Resources.Messages.Errors.InvalidUsernameOrPassword);
-		}
-
-		if (!CheckPassword(inputPlainText: request.Password, storedHashedPassword: employee.Password))
-		{
-			throw new Exception(Domain.Shared.Resources.Messages.Errors.InvalidUsernameOrPassword);
+			return ServiceResult<LoginResponseDto>.Failed(message: Errors.InvalidUsernameOrPassword, statusCode: 401);
 		}
 
 		var token = JwtRepo.GenerateToken(employee);
@@ -40,7 +36,7 @@ public class LoginService(IEmployeeRepository employeeRepository, IJwtService jw
 			Token = token
 		};
 
-		return response;
+		return ServiceResult<LoginResponseDto>.Succeeded(response);
 	}
 
 	private static bool CheckPassword(string inputPlainText, string storedHashedPassword)

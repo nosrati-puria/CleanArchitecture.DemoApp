@@ -49,7 +49,7 @@ public static class Utility
 
 		public const byte PasswordMinLength = 8;
 
-		public const byte PasswordMaxLength = 20;
+		public const byte PasswordMaxLength = 64;
 
 		public const byte FullNameMinLength = 100;
 
