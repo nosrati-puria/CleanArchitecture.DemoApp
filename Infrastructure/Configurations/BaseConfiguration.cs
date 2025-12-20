@@ -29,6 +29,12 @@ internal class BaseConfiguration<T> : IEntityTypeConfiguration<T>
 			.IsRequired(required: true)
 			;
 
+		builder
+			.HasIndex(propertyNames: nameof(BaseEntity.InsertDateTime))
+			.IsUnique(unique: false)
+			.IsClustered(clustered: true)
+			;
+
 		#endregion /InsertDateTime
 	}
 }

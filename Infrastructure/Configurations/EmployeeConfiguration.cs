@@ -82,6 +82,7 @@ internal class EmployeeConfiguration() : BaseConfiguration<Employee>
 
 		builder
 			.HasIndex(current => current.Email)
+			.IsClustered(clustered: false)
 			.IsUnique(unique: true)
 			;
 
@@ -99,6 +100,7 @@ internal class EmployeeConfiguration() : BaseConfiguration<Employee>
 
 		builder
 			.HasIndex(current => current.CellPhoneNumber)
+			.IsClustered(clustered: false)
 			.IsUnique(unique: true)
 			;
 
