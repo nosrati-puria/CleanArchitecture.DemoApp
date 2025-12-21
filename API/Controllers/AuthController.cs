@@ -1,5 +1,4 @@
-﻿using System;
-using SharedKernel.DTOs;
+﻿using SharedKernel.DTOs;
 using Application.Interfaces;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -27,7 +26,8 @@ public class AuthController(ILoginService loginService) : ControllerBase
 				{
 					Username = model.Username,
 					Password = model.Password,
-				});
+				}
+			);
 
 		if (!result.IsSuccess)
 		{

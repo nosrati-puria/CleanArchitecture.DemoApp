@@ -1,12 +1,16 @@
-﻿@inherits LayoutComponentBase
+﻿@using Domain.Shared.Resources
+
+@inherits LayoutComponentBase
 <div class="page">
 	<div class="sidebar">
 		<NavMenu />
 	</div>
 
-	<main>
+	<main class="">
 		<div class="top-row px-4">
-			<a href="/Login" target="_blank">Sign in</a>
+			<NavLink href="/Login" class="btn btn-primary" target="_blank">
+				@(DataDictionary.SignIn)
+			</NavLink>
 		</div>
 
 		<article class="content px-4">

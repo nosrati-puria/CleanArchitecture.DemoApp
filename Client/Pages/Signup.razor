@@ -1,5 +1,6 @@
 ﻿@page "/signup"
 
+@using Domain.Entities
 @using SharedKernel.DTOs;
 @using Domain.Shared.Resources;
 @using Domain.Shared.Resources.Messages;
@@ -14,6 +15,7 @@
 	<div class="card p-4 shadow" style="width:350px;">
 		<EditForm Model="signupModel" OnValidSubmit="HandleSignupAsync">
 			<DataAnnotationsValidator />
+			<ValidationSummary />
 
 			<div class="mb-3">
 				<label class="form-label">@nameof(Domain.Entities.Employee.Username)</label>
@@ -36,11 +38,11 @@
 			</div>
 
 			<div class="mb-3">
-				<label class="form-label">@nameof(Domain.Entities.Employee.CellPhoneNumber)</label>
+				<label class="form-label">@nameof(Employee.CellPhoneNumber)</label>
 				<InputText @bind-Value="signupModel.CellPhoneNumber" class="form-control" />
 			</div>
 
-			<button type="submit" class="btn btn-primary w-100">@nameof(DataDictionary.SignUp)</button>
+			<button type="submit" class="btn btn-primary w-100">@(DataDictionary.SignUp)</button>
 		</EditForm>
 
 		@if (!string.IsNullOrEmpty(errorMessage))
@@ -58,7 +60,7 @@
 	{
 		try
 		{
-			var response = await Http.PostAsJsonAsync("api/signup/register", signupModel);
+			var response = await Http.PostAsJsonAsync("https://localhost:44325/api/Signup/Register", signupModel);
 
 			if (!response.IsSuccessStatusCode)
 			{

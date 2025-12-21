@@ -94,7 +94,7 @@ public class Employee() : Seedwork.BaseEntity
 		ErrorMessageResourceType = typeof(Validations),
 		ErrorMessageResourceName = nameof(Validations.CellPhoneNumber),
 		MatchTimeoutInMilliseconds = 0)]
-	[Display(Name = nameof(DataDictionary.CellPhoneNumber))]
+	[Display(Name = nameof(DataDictionary.CellPhoneNumber), ResourceType = typeof(DataDictionary))]
 	public string CellPhoneNumber { get; set; } = null!;
 
 	#endregion /CellPhoneNumber

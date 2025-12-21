@@ -45,7 +45,7 @@ namespace Domain.Shared.Resources
 			{
 				if (object.ReferenceEquals(resourceMan, null))
 				{
-					global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Resources.DataDictionary", typeof(DataDictionary).Assembly);
+					global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Domain.Shared.Resources.DataDictionary", typeof(DataDictionary).Assembly);
 					resourceMan = temp;
 				}
 				return resourceMan;
@@ -66,17 +66,6 @@ namespace Domain.Shared.Resources
 			set
 			{
 				resourceCulture = value;
-			}
-		}
-
-		/// <summary>
-		///   Looks up a localized string similar to .
-		/// </summary>
-		public static string AccessType
-		{
-			get
-			{
-				return ResourceManager.GetString("AccessType", resourceCulture);
 			}
 		}
 
@@ -103,17 +92,6 @@ namespace Domain.Shared.Resources
 		}
 
 		/// <summary>
-		///   Looks up a localized string similar to Admin.
-		/// </summary>
-		public static string Admin
-		{
-			get
-			{
-				return ResourceManager.GetString("Admin", resourceCulture);
-			}
-		}
-
-		/// <summary>
 		///   Looks up a localized string similar to Admin Description.
 		/// </summary>
 		public static string AdminDescription
@@ -136,46 +114,13 @@ namespace Domain.Shared.Resources
 		}
 
 		/// <summary>
-		///   Looks up a localized string similar to Admin Approved.
+		///   Looks up a localized string similar to Approved.
 		/// </summary>
 		public static string Approved
 		{
 			get
 			{
 				return ResourceManager.GetString("Approved", resourceCulture);
-			}
-		}
-
-		/// <summary>
-		///   Looks up a localized string similar to .
-		/// </summary>
-		public static string ApplicationHandler
-		{
-			get
-			{
-				return ResourceManager.GetString("ApplicationHandler", resourceCulture);
-			}
-		}
-
-		/// <summary>
-		///   Looks up a localized string similar to .
-		/// </summary>
-		public static string ApplicationHandlerManager
-		{
-			get
-			{
-				return ResourceManager.GetString("ApplicationHandlerManager", resourceCulture);
-			}
-		}
-
-		/// <summary>
-		///   Looks up a localized string similar to .
-		/// </summary>
-		public static string ApplicationHandlers
-		{
-			get
-			{
-				return ResourceManager.GetString("ApplicationHandlers", resourceCulture);
 			}
 		}
 
@@ -422,6 +367,17 @@ namespace Domain.Shared.Resources
 		}
 
 		/// <summary>
+		///   Looks up a localized string similar to Developer.
+		/// </summary>
+		public static string Developer
+		{
+			get
+			{
+				return ResourceManager.GetString("Developer", resourceCulture);
+			}
+		}
+
+		/// <summary>
 		///   Looks up a localized string similar to Display Creator User.
 		/// </summary>
 		public static string DisplayCreatorUser
@@ -429,28 +385,6 @@ namespace Domain.Shared.Resources
 			get
 			{
 				return ResourceManager.GetString("DisplayCreatorUser", resourceCulture);
-			}
-		}
-
-		/// <summary>
-		///   Looks up a localized string similar to .
-		/// </summary>
-		public static string DisplayInContactUsPage
-		{
-			get
-			{
-				return ResourceManager.GetString("DisplayInContactUsPage", resourceCulture);
-			}
-		}
-
-		/// <summary>
-		///   Looks up a localized string similar to .
-		/// </summary>
-		public static string DisplayNameInContactUsPage
-		{
-			get
-			{
-				return ResourceManager.GetString("DisplayNameInContactUsPage", resourceCulture);
 			}
 		}
 
@@ -510,13 +444,13 @@ namespace Domain.Shared.Resources
 		}
 
 		/// <summary>
-		///   Looks up a localized string similar to Email Address Verification Key Expire Time.
+		///   Looks up a localized string similar to Employee.
 		/// </summary>
-		public static string EmailAddressVerificationKeyExpireDateTime
+		public static string Employee
 		{
 			get
 			{
-				return ResourceManager.GetString("EmailAddressVerificationKeyExpireDateTime", resourceCulture);
+				return ResourceManager.GetString("Employee", resourceCulture);
 			}
 		}
 
@@ -972,6 +906,17 @@ namespace Domain.Shared.Resources
 		}
 
 		/// <summary>
+		///   Looks up a localized string similar to Manager.
+		/// </summary>
+		public static string Manager
+		{
+			get
+			{
+				return ResourceManager.GetString("Manager", resourceCulture);
+			}
+		}
+
+		/// <summary>
 		///   Looks up a localized string similar to MenuItem.
 		/// </summary>
 		public static string MenuItem
@@ -1181,17 +1126,6 @@ namespace Domain.Shared.Resources
 		}
 
 		/// <summary>
-		///   Looks up a localized string similar to .
-		/// </summary>
-		public static string Permissions
-		{
-			get
-			{
-				return ResourceManager.GetString("Permissions", resourceCulture);
-			}
-		}
-
-		/// <summary>
 		///   Looks up a localized string similar to Profile.
 		/// </summary>
 		public static string Profile
@@ -1199,17 +1133,6 @@ namespace Domain.Shared.Resources
 			get
 			{
 				return ResourceManager.GetString("Profile", resourceCulture);
-			}
-		}
-
-		/// <summary>
-		///   Looks up a localized string similar to .
-		/// </summary>
-		public static string Public
-		{
-			get
-			{
-				return ResourceManager.GetString("Public", resourceCulture);
 			}
 		}
 
@@ -1243,17 +1166,6 @@ namespace Domain.Shared.Resources
 			get
 			{
 				return ResourceManager.GetString("Rejected", resourceCulture);
-			}
-		}
-
-		/// <summary>
-		///   Looks up a localized string similar to .
-		/// </summary>
-		public static string Registered
-		{
-			get
-			{
-				return ResourceManager.GetString("Registered", resourceCulture);
 			}
 		}
 
@@ -1423,7 +1335,7 @@ namespace Domain.Shared.Resources
 		}
 
 		/// <summary>
-		///   Looks up a localized string similar to Sign in.
+		///   Looks up a localized string similar to Sign In.
 		/// </summary>
 		public static string SignIn
 		{
@@ -1463,17 +1375,6 @@ namespace Domain.Shared.Resources
 			get
 			{
 				return ResourceManager.GetString("SiteAuthor", resourceCulture);
-			}
-		}
-
-		/// <summary>
-		///   Looks up a localized string similar to .
-		/// </summary>
-		public static string Sites
-		{
-			get
-			{
-				return ResourceManager.GetString("Sites", resourceCulture);
 			}
 		}
 
@@ -1518,17 +1419,6 @@ namespace Domain.Shared.Resources
 			get
 			{
 				return ResourceManager.GetString("Status", resourceCulture);
-			}
-		}
-
-		/// <summary>
-		///   Looks up a localized string similar to .
-		/// </summary>
-		public static string Special
-		{
-			get
-			{
-				return ResourceManager.GetString("Special", resourceCulture);
 			}
 		}
 
@@ -1687,17 +1577,6 @@ namespace Domain.Shared.Resources
 		}
 
 		/// <summary>
-		///   Looks up a localized string similar to .
-		/// </summary>
-		public static string VerificationKeyExpireDateTime
-		{
-			get
-			{
-				return ResourceManager.GetString("VerificationKeyExpireDateTime", resourceCulture);
-			}
-		}
-
-		/// <summary>
 		///   Looks up a localized string similar to Verified.
 		/// </summary>
 		public static string Verified
@@ -1749,39 +1628,6 @@ namespace Domain.Shared.Resources
 			get
 			{
 				return ResourceManager.GetString("WithoutRole", resourceCulture);
-			}
-		}
-
-		/// <summary>
-		///   Looks up a localized string similar to Developer.
-		/// </summary>
-		public static string Developer
-		{
-			get
-			{
-				return ResourceManager.GetString("Developer", resourceCulture);
-			}
-		}
-
-		/// <summary>
-		///   Looks up a localized string similar to Manager.
-		/// </summary>
-		public static string Manager
-		{
-			get
-			{
-				return ResourceManager.GetString("Manager", resourceCulture);
-			}
-		}
-
-		/// <summary>
-		///   Looks up a localized string similar to Employee.
-		/// </summary>
-		public static string Employee
-		{
-			get
-			{
-				return ResourceManager.GetString("Employee", resourceCulture);
 			}
 		}
 	}

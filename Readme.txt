@@ -1,6 +1,5 @@
 For next Step we should:
 
-
-1- add seed data for manager.
-2- sign up
-3- Crud pages for employee
+1- Sign up (Backend)
+2- Crud pages for employee
+3- Solve resources problem

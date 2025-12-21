@@ -1,16 +1,30 @@
-﻿namespace SharedKernel.DTOs;
+﻿using Domain.Shared.Resources;
+using Domain.Shared.Resources.Messages;
+using System.ComponentModel.DataAnnotations;
+
+namespace SharedKernel.DTOs;
 
 public record SignupDto()
 {
 	/// <summary>
 	/// شناسه‌ی کاربری
 	/// </summary>
+	[Required
+		(AllowEmptyStrings = false,
+		ErrorMessageResourceType = typeof(Validations),
+		ErrorMessageResourceName = nameof(Validations.Required))]
+	[Display(Name = nameof(DataDictionary.Username))]
 	public string Username { get; set; } = string.Empty;
 
 
 	/// <summary>
 	/// رمز عبور
 	/// </summary>
+	[Required
+		(AllowEmptyStrings = false,
+		ErrorMessageResourceType = typeof(Validations),
+		ErrorMessageResourceName = nameof(Validations.Required))]
+	[Display(Name = nameof(DataDictionary.Password))]
 	public string Password { get; set; } = string.Empty;
 
 
@@ -23,6 +37,11 @@ public record SignupDto()
 	/// <summary>
 	/// ایمیل
 	/// </summary>
+	[Required
+		(AllowEmptyStrings = false,
+		ErrorMessageResourceType = typeof(Validations),
+		ErrorMessageResourceName = nameof(Validations.Required))]
+	[Display(Name = nameof(DataDictionary.Password))]
 	public string Email { get; set; } = string.Empty;
 
 

@@ -45,7 +45,7 @@ namespace Domain.Shared.Resources
 			{
 				if (object.ReferenceEquals(resourceMan, null))
 				{
-					global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Resources.PageTitles", typeof(PageTitles).Assembly);
+					global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Domain.Shared.Resources.PageTitles", typeof(PageTitles).Assembly);
 					resourceMan = temp;
 				}
 				return resourceMan;

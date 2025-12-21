@@ -17,8 +17,8 @@ public class SignupController(IEmployeeRepository employeeRepository) : Controll
 {
 	private readonly IEmployeeRepository _employeeRepository = employeeRepository;
 
-
-	[HttpPost(Name = nameof(Register))]
+	[AllowAnonymous]
+	[HttpPost(template: nameof(Register))]
 	[ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
 	[ProducesResponseType(statusCode: StatusCodes.Status200OK, Type = typeof(LoginResponseDto))]
 	public async Task<IActionResult> Register([FromBody] SignupDto model)
