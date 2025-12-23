@@ -8,7 +8,7 @@
 @inject HttpClient Http
 @inject NavigationManager Navigation
 
-<h3 class="text-center mt-5">Log In</h3>
+<h3 class="text-center mt-5">@(DataDictionary.SignIn)</h3>
 
 <div class="d-flex justify-content-center mt-4">
 	<div class="card p-4 shadow" style="width:350px;">
@@ -17,20 +17,30 @@
 			<ValidationSummary />
 
 			<div class="mb-3">
-				<label class="form-label">@nameof(Domain.Entities.Employee.Username)</label>
+				<label class="form-label">@(DataDictionary.Username)</label>
 				<InputText @bind-Value="loginModel.Username" class="form-control" />
 			</div>
 
 			<div class="mb-3">
-				<label class="form-label">@nameof(Domain.Entities.Employee.Password)</label>
+				<label class="form-label">@(DataDictionary.Password)</label>
 				<InputText @bind-Value="loginModel.Password" type="password" class="form-control" />
 			</div>
 
-			<button type="submit" class="btn btn-primary w-100">@nameof(DataDictionary.SignIn)</button>
+			<button type="submit" class="btn btn-primary w-100" disabled="@isLoading" @onclick="HandleLoginAsync">
+				@if (isLoading)
+				{
+					<span class="spinner-border spinner-border-sm"></span>
+					<span class="ms-2">@(DataDictionary.SigningIn)</span>
+				}
+				else
+				{
+					<span>@(DataDictionary.SignIn)</span>
+				}
+			</button>
 
 			<div class="text-center mt-3">
 				<span>Don't have an account?</span>
-				<a href="/Signup" class="ms-1 bold">Sign Up</a>
+				<a href="/Signup" class="ms-1 bold">@(DataDictionary.SignUp)</a>
 			</div>
 		</EditForm>
 
@@ -42,6 +52,7 @@
 </div>
 
 @code {
+	private bool isLoading = false;
 	private string errorMessage = string.Empty;
 	private readonly LoginRequestDto loginModel = new();
 
@@ -49,12 +60,13 @@
 	{
 		try
 		{
-			var response = await Http.PostAsJsonAsync("https://localhost:44325/api/Auth/Login", loginModel);
+			var response = await Http.PostAsJsonAsync("api/Auth/Login", loginModel);
 
+			isLoading = true;
 
 			if (!response.IsSuccessStatusCode)
 			{
-				var serverMessage = await response.Content.ReadFromJsonAsync<SharedKernel.ErrorResponse>();
+				var serverMessage = await response.Content.ReadFromJsonAsync<SharedKernel.Error>();
 				errorMessage = serverMessage?.Message;
 
 				return;
@@ -79,6 +91,10 @@
 		catch (Exception ex)
 		{
 			errorMessage = $"خطا: {ex.Message}";
+		}
+		finally
+		{
+			isLoading = false;
 		}
 	}
 }

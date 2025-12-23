@@ -17,9 +17,9 @@ public interface IEmployeeRepository
 
 	Task<Employee?> GetByUsername(string username);
 
-	Task CreateAsync(Employee employee);
-
 	Task UpdateAsync(Employee employee);
 
 	Task DeleteAsync(Guid id);
+
+	Task<bool> CheckUsernameExistAsync(string username);
 }

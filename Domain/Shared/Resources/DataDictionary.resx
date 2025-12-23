@@ -496,7 +496,7 @@
     <value>List of</value>
   </data>
   <data name="SignIn" xml:space="preserve">
-    <value>Sign In</value>
+    <value>Sign in</value>
   </data>
   <data name="SignOut" xml:space="preserve">
     <value>Sign out</value>
@@ -542,5 +542,11 @@
   </data>
   <data name="RoleNumber" xml:space="preserve">
     <value>Role Number</value>
+  </data>
+  <data name="SigningUp" xml:space="preserve">
+    <value>Signing up</value>
+  </data>
+  <data name="SigningIn" xml:space="preserve">
+    <value>Signing in</value>
   </data>
 </root>

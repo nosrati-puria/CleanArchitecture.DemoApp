@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Domain.Shared;
 using Domain.Entities;
-using SharedKernel.DTOs;
 using Domain.Interfaces;
+using SharedKernel.DTOs;
 using System.Threading.Tasks;
 using Domain.Shared.Resources;
 using Microsoft.AspNetCore.Mvc;
@@ -19,34 +19,37 @@ public class SignupController(IEmployeeRepository employeeRepository) : Controll
 
 	[AllowAnonymous]
 	[HttpPost(template: nameof(Register))]
-	[ProducesResponseType(statusCode: StatusCodes.Status401Unauthorized)]
+	[ProducesResponseType(statusCode: StatusCodes.Status409Conflict)]
 	[ProducesResponseType(statusCode: StatusCodes.Status200OK, Type = typeof(LoginResponseDto))]
 	public async Task<IActionResult> Register([FromBody] SignupDto model)
 	{
-		try
+		var employee = new Employee()
 		{
-			var employee = new Employee()
+			Username = model.Username,
+			Password = Utility.Hasher.GetHash(input: model.Password),
+			FullName = model.FullName,
+			Email = model.Email,
+			CellPhoneNumber = model.CellPhoneNumber,
+			Role = new Role()
 			{
-				Username = model.Username,
-				Password = model.Password,
-				FullName = model.FullName,
-				Email = model.Email,
-				CellPhoneNumber = model.CellPhoneNumber,
-				Role = new Role()
-				{
-					Number = Domain.Enums.Role.Employee,
-					Description = nameof(DataDictionary.Employee),
-				},
-			};
+				Number = Domain.Enums.Role.Employee,
+				Description = nameof(DataDictionary.Employee),
+			},
+		};
 
-			await
-				_employeeRepository.CreateAsync(employee);
+		var alreadyExists = await
+			_employeeRepository.CheckUsernameExistAsync(employee.Username);
 
-			return Ok();
-		}
-		catch (Exception)
+		if (alreadyExists)
 		{
-			return Unauthorized();
+			return Conflict(Domain.Shared.Resources.Messages.Errors.AlreadyExists);
+		}
+		else
+		{
+			await
+				_employeeRepository.AddAsync(employee);
+
+			return Ok(model);
 		}
 	}
 }

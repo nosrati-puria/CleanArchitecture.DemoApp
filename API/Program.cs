@@ -66,7 +66,7 @@ public static class Program
 			{
 				options.AddPolicy("AllowBlazorClient", policy =>
 				{
-					policy.WithOrigins("https://localhost:44361")
+					policy.WithOrigins("https://localhost:7298")
 						  .AllowAnyHeader()
 						  .AllowAnyMethod()
 						  .AllowCredentials();
@@ -108,6 +108,7 @@ public static class Program
 				};
 			});
 
+		builder.Services.AddProblemDetails();
 		builder.Services.AddScoped<IJwtService, JwtService>();
 		builder.Services.AddScoped<ILoginService, LoginService>();
 		builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();

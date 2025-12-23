@@ -31,6 +31,7 @@ public class EmployeeRepository(AppDbContext appDbContext) : IEmployeeRepository
 		var entity =
 			_appDbContext.Employees.AddAsync(entity: employee);
 
+		await SaveChangesAsync();
 		await entity;
 	}
 
@@ -64,19 +65,13 @@ public class EmployeeRepository(AppDbContext appDbContext) : IEmployeeRepository
 		return emplyee;
 	}
 
-	public async Task CreateAsync(Employee employee)
+	public async Task<bool> CheckUsernameExistAsync(string username)
 	{
 		var alreadyExist = await
 			_appDbContext.Employees
-				.AnyAsync(current => current.Username == employee.Username);
+				.AnyAsync(current => current.Username == username);
 
-		if (alreadyExist)
-		{
-			throw new Exception(Domain.Shared.Resources.Messages.Errors.AlreadyExists);
-		}
-
-		await AddAsync(employee);
-		await SaveChangesAsync();
+		return alreadyExist;
 	}
 
 	public async Task UpdateAsync(Employee employee)

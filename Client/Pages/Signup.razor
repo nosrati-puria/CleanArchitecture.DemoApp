@@ -9,7 +9,7 @@
 @inject HttpClient Http
 @inject NavigationManager Navigation
 
-<h3 class="text-center mt-5">Sign Up</h3>
+<h3 class="text-center mt-5">@(DataDictionary.SignUp)</h3>
 
 <div class="d-flex justify-content-center mt-4">
 	<div class="card p-4 shadow" style="width:350px;">
@@ -18,41 +18,52 @@
 			<ValidationSummary />
 
 			<div class="mb-3">
-				<label class="form-label">@nameof(Domain.Entities.Employee.Username)</label>
+				<label class="form-label">@(DataDictionary.Username)</label>
 				<InputText @bind-Value="signupModel.Username" class="form-control" />
 			</div>
 
 			<div class="mb-3">
-				<label class="form-label">@nameof(Domain.Entities.Employee.Password)</label>
+				<label class="form-label">@(DataDictionary.Password)</label>
 				<InputText @bind-Value="signupModel.Password" type="password" class="form-control" />
 			</div>
 
 			<div class="mb-3">
-				<label class="form-label">@nameof(Domain.Entities.Employee.FullName)</label>
+				<label class="form-label">@(DataDictionary.FullName)</label>
 				<InputText @bind-Value="signupModel.FullName" class="form-control" />
 			</div>
 
 			<div class="mb-3">
-				<label class="form-label">@nameof(Domain.Entities.Employee.Email)</label>
+				<label class="form-label">@(DataDictionary.EmailAddress)</label>
 				<InputText @bind-Value="signupModel.Email" class="form-control" />
 			</div>
 
 			<div class="mb-3">
-				<label class="form-label">@nameof(Employee.CellPhoneNumber)</label>
+				<label class="form-label">@(DataDictionary.CellPhoneNumber)</label>
 				<InputText @bind-Value="signupModel.CellPhoneNumber" class="form-control" />
 			</div>
 
-			<button type="submit" class="btn btn-primary w-100">@(DataDictionary.SignUp)</button>
+			<button type="submit" class="btn btn-primary w-100" disabled="@isLoading" @onclick="HandleSignupAsync">
+				@if (isLoading)
+				{
+					<span class="spinner-border spinner-border-sm"></span>
+					<span class="ms-2">@(DataDictionary.SigningUp)</span>
+				}
+				else
+				{
+					<span>@(DataDictionary.SignUp)</span>
+				}
+			</button>
 		</EditForm>
 
 		@if (!string.IsNullOrEmpty(errorMessage))
 		{
-			<div class="alert alert-danger mt-3">@errorMessage</div>
+			<div class="alert alert-danger mt-3 error">@errorMessage</div>
 		}
 	</div>
 </div>
 
 @code {
+	private bool isLoading = false;
 	private string errorMessage = string.Empty;
 	private readonly SignupDto signupModel = new();
 
@@ -60,40 +71,71 @@
 	{
 		try
 		{
-			var response = await Http.PostAsJsonAsync("https://localhost:44325/api/Signup/Register", signupModel);
+			using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+
+			isLoading = true;
+
+			var response = await Http
+				.PostAsJsonAsync("api/Signup/Register", signupModel, cts.Token);
 
 			if (!response.IsSuccessStatusCode)
 			{
-				var serverMessage = await response.Content.ReadAsStringAsync();
-				errorMessage = nameof(Errors.InvalidUsernameOrPassword);
-
-				if (!string.IsNullOrWhiteSpace(serverMessage))
-				{
-					errorMessage += $": {serverMessage}";
-				}
-
+				await HandleErrorResponse(response);
 				return;
 			}
 
-			var result = await response.Content.ReadFromJsonAsync<LoginResponseDto>();
+			var result = await response.Content
+				.ReadFromJsonAsync<SignupDto>(cancellationToken: cts.Token);
 
-			if (result is null || string.IsNullOrWhiteSpace(result.Token))
+			if (result is null)
 			{
-				errorMessage = Errors.EmptyToken;
+				errorMessage = "Unproper Resoponse!";
 				return;
 			}
 
-			await JS.InvokeVoidAsync("localStorage.setItem", "jwt", result.Token);
+			// await JS.InvokeVoidAsync("localStorage.setItem", "jwt", cts.Token);
 
-			Navigation.NavigateTo("/");
+			Navigation.NavigateTo("/", replace: true);
 		}
-		catch (JSException jsEx)
+		catch (OperationCanceledException)
 		{
-			errorMessage = $@"خطا در ذخیره‌سازی توکن در مرورگر: {jsEx.Message}";
+			errorMessage = "Too long request time!";
+		}
+		catch (HttpRequestException)
+		{
+			errorMessage = "Connection to server failed!";
 		}
 		catch (Exception ex)
 		{
-			errorMessage = $"خطا: {ex.Message}";
+			errorMessage = $"Unexpected error: {ex.Message}";
+		}
+		finally
+		{
+			isLoading = false;
+		}
+	}
+
+	private async Task HandleErrorResponse(HttpResponseMessage response)
+	{
+		var contentType = response
+			.Content.Headers.ContentType?.MediaType;
+
+		if (contentType == "application/json")
+		{
+			var problem = await response.Content
+				.ReadFromJsonAsync<ProblemDetailsDto>();
+
+			errorMessage = problem?.Detail
+				?? problem?.Title
+				?? "An error occured!";
+		}
+		else
+		{
+			var text = await response.Content.ReadAsStringAsync();
+
+			errorMessage = string.IsNullOrWhiteSpace(text)
+				? "An error occured!"
+				: text;
 		}
 	}
 }

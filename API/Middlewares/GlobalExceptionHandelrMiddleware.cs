@@ -19,7 +19,7 @@ public class GlobalExceptionHandelrMiddleware(RequestDelegate next)
 		{
 			await Next(context: httpContext);
 		}
-		catch (Exception)
+		catch (Exception ex)
 		{
 			//Todo
 			//Log

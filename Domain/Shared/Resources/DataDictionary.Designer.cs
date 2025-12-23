@@ -1335,13 +1335,35 @@ namespace Domain.Shared.Resources
 		}
 
 		/// <summary>
-		///   Looks up a localized string similar to Sign In.
+		///   Looks up a localized string similar to Sign in.
 		/// </summary>
 		public static string SignIn
 		{
 			get
 			{
 				return ResourceManager.GetString("SignIn", resourceCulture);
+			}
+		}
+
+		/// <summary>
+		///   Looks up a localized string similar to Signing in.
+		/// </summary>
+		public static string SigningIn
+		{
+			get
+			{
+				return ResourceManager.GetString("SigningIn", resourceCulture);
+			}
+		}
+
+		/// <summary>
+		///   Looks up a localized string similar to Signing up.
+		/// </summary>
+		public static string SigningUp
+		{
+			get
+			{
+				return ResourceManager.GetString("SigningUp", resourceCulture);
 			}
 		}
 

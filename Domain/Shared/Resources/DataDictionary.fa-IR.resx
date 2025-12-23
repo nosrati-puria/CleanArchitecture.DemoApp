@@ -543,4 +543,10 @@
   <data name="RoleNumber" xml:space="preserve">
     <value>شماره نقش</value>
   </data>
+  <data name="SigningUp" xml:space="preserve">
+    <value>در حال ثبت نام</value>
+  </data>
+  <data name="SigningIn" xml:space="preserve">
+    <value>در حال ورود</value>
+  </data>
 </root>
