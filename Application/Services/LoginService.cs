@@ -12,11 +12,12 @@ namespace Application.Services;
 /// سرویس لاگین
 /// </summary>
 /// <param name="employeeRepository"></param>
-/// <param name="jwtService"></param>
-public class LoginService(IEmployeeRepository employeeRepository, IJwtService jwtService) : ILoginService
+/// <param name="tokenService"></param>
+public class LoginService(IEmployeeRepository employeeRepository, ITokenService tokenService) : ILoginService
 {
 	public IEmployeeRepository EmployeeRepo { get; } = employeeRepository;
-	public IJwtService JwtRepo { get; } = jwtService;
+
+	private readonly ITokenService _tokenService = tokenService;
 
 
 	public async Task<ServiceResult<LoginResponseDto>> LoginAsync(LoginRequestDto request)
@@ -29,7 +30,7 @@ public class LoginService(IEmployeeRepository employeeRepository, IJwtService jw
 			return ServiceResult<LoginResponseDto>.Failed(message: Errors.InvalidUsernameOrPassword, statusCode: 401);
 		}
 
-		var token = JwtRepo.GenerateToken(employee);
+		var token = _tokenService.GenerateToken(employee);
 
 		var response = new LoginResponseDto
 		{

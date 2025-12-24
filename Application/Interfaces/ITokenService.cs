@@ -1,8 +1,8 @@
 ﻿using Domain.Entities;
 
-namespace Domain.Interfaces;
+namespace Application.Interfaces;
 
-public interface IJwtService
+public interface ITokenService
 {
 	string GenerateToken(Employee employee);
 }

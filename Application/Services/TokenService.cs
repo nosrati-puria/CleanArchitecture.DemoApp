@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Text;
 using Domain.Entities;
-using Domain.Interfaces;
+using Application.Interfaces;
 using System.Security.Claims;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using Microsoft.Extensions.Configuration;
 
-namespace Infrastructure.Repositories;
+namespace Application.Services;
 
 /// <summary>
 /// سرویس توکن
 /// </summary>
-/// <param name="configuration"></param>
-public class JwtService(IConfiguration configuration) : IJwtService
+/// <param name="options"></param>
+public class TokenService(IOptions<JwtOptions> options) : ITokenService
 {
-	public IConfiguration Configuration { get; } = configuration;
+	public IOptions<JwtOptions> Options { get; } = options;
 
 
 	public string GenerateToken(Employee employee)
@@ -26,12 +26,12 @@ public class JwtService(IConfiguration configuration) : IJwtService
 			new Claim(type: ClaimTypes.Role, value: employee.Role?.Number.ToString()!)
 		};
 
-		var issuer = Configuration[key: "Jwt:Issuer"];
-		var audience = Configuration[key: "Jwt:Audience"];
-		var secretKey = Configuration[key: "Jwt:SecretKey"];
+		var issuer = Options.Value.Issuer;
+		var audience = Options.Value.Audience;
+		var secretKey = Options.Value.SecretKey;
 
-		var expiration = DateTime.UtcNow.AddMinutes
-			(Configuration.GetValue<int>(key: "Jwt:ExpirationInMinutes"));
+		var expiration = DateTime.UtcNow
+			.AddMinutes(value: Options.Value.ExpirationInMinutes);
 
 		var securityKey = new SymmetricSecurityKey(key: Encoding.UTF8.GetBytes(secretKey!));
 		var credentials = new SigningCredentials(key: securityKey, algorithm: SecurityAlgorithms.HmacSha256);

@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using Application;
 using API.Middlewares;
 using Domain.Interfaces;
 using Infrastructure.Data;
@@ -109,7 +110,8 @@ public static class Program
 			});
 
 		builder.Services.AddProblemDetails();
-		builder.Services.AddScoped<IJwtService, JwtService>();
+		builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("Jwt"));
+		builder.Services.AddScoped<ITokenService, TokenService>();
 		builder.Services.AddScoped<ILoginService, LoginService>();
 		builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
