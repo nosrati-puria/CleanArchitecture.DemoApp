@@ -13,7 +13,8 @@ internal class LeaveRequestConfiguration() : BaseConfiguration<LeaveRequest>
 
 		builder.ToTable(name: nameof(LeaveRequest), schema: "HR");
 
-		//**************************************************
+		//*************************
+
 		#region EmployeeId
 
 		builder
@@ -23,7 +24,8 @@ internal class LeaveRequestConfiguration() : BaseConfiguration<LeaveRequest>
 
 		#endregion /EmployeeId
 
-		//**************************************************
+		//*************************
+
 		#region FromDate
 
 		builder
@@ -33,7 +35,8 @@ internal class LeaveRequestConfiguration() : BaseConfiguration<LeaveRequest>
 
 		#endregion /FromDate
 
-		//**************************************************
+		//*************************
+
 		#region ToDate
 
 		builder
@@ -43,7 +46,8 @@ internal class LeaveRequestConfiguration() : BaseConfiguration<LeaveRequest>
 
 		#endregion /ToDate
 
-		//**************************************************
+		//*************************
+
 		#region Reason
 
 		builder
@@ -56,7 +60,8 @@ internal class LeaveRequestConfiguration() : BaseConfiguration<LeaveRequest>
 
 		#endregion /Reason
 
-		//**************************************************
+		//*************************
+
 
 		#region Status
 
@@ -68,7 +73,8 @@ internal class LeaveRequestConfiguration() : BaseConfiguration<LeaveRequest>
 
 		#endregion /Status
 
-		//**************************************************
+		//*************************
+
 		#region Status
 
 		builder
@@ -79,7 +85,7 @@ internal class LeaveRequestConfiguration() : BaseConfiguration<LeaveRequest>
 
 		#endregion /Status
 
-		//**************************************************
+		//*************************
 
 		#region SubstituteEmployeeId
 
@@ -90,7 +96,7 @@ internal class LeaveRequestConfiguration() : BaseConfiguration<LeaveRequest>
 
 		#endregion /SubstituteEmployeeId
 
-		//**************************************************
+		//*************************
 
 	}
 }

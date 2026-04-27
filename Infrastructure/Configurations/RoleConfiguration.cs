@@ -14,7 +14,7 @@ internal class RoleConfiguration() : BaseConfiguration<Role>
 
 		builder.ToTable(name: nameof(Role), schema: "HR");
 
-		//**************************************************
+		//*************************
 
 		#region Number
 
@@ -31,7 +31,7 @@ internal class RoleConfiguration() : BaseConfiguration<Role>
 
 		#endregion /Number
 
-		//**************************************************
+		//*************************
 
 		#region Name
 
@@ -45,7 +45,7 @@ internal class RoleConfiguration() : BaseConfiguration<Role>
 
 		#endregion /Name
 
-		//**************************************************
+		//*************************
 
 		#region Employees
 
@@ -56,5 +56,7 @@ internal class RoleConfiguration() : BaseConfiguration<Role>
 			;
 
 		#endregion /Employees
+
+		//*************************
 	}
 }

@@ -455,6 +455,28 @@ namespace Domain.Shared.Resources
 		}
 
 		/// <summary>
+		///   Looks up a localized string similar to Employee Id.
+		/// </summary>
+		public static string EmployeeId
+		{
+			get
+			{
+				return ResourceManager.GetString("EmployeeId", resourceCulture);
+			}
+		}
+
+		/// <summary>
+		///   Looks up a localized string similar to Employees.
+		/// </summary>
+		public static string Employees
+		{
+			get
+			{
+				return ResourceManager.GetString("Employees", resourceCulture);
+			}
+		}
+
+		/// <summary>
 		///   Looks up a localized string similar to Female.
 		/// </summary>
 		public static string Female
@@ -484,6 +506,17 @@ namespace Domain.Shared.Resources
 			get
 			{
 				return ResourceManager.GetString("FirstName", resourceCulture);
+			}
+		}
+
+		/// <summary>
+		///   Looks up a localized string similar to From Date.
+		/// </summary>
+		public static string FromDate
+		{
+			get
+			{
+				return ResourceManager.GetString("FromDate", resourceCulture);
 			}
 		}
 
@@ -840,6 +873,17 @@ namespace Domain.Shared.Resources
 		}
 
 		/// <summary>
+		///   Looks up a localized string similar to Leave Requests.
+		/// </summary>
+		public static string LeaveRequests
+		{
+			get
+			{
+				return ResourceManager.GetString("LeaveRequests", resourceCulture);
+			}
+		}
+
+		/// <summary>
 		///   Looks up a localized string similar to Left.
 		/// </summary>
 		public static string Left
@@ -1155,6 +1199,17 @@ namespace Domain.Shared.Resources
 			get
 			{
 				return ResourceManager.GetString("PublishStartDateTime", resourceCulture);
+			}
+		}
+
+		/// <summary>
+		///   Looks up a localized string similar to Reason.
+		/// </summary>
+		public static string Reason
+		{
+			get
+			{
+				return ResourceManager.GetString("Reason", resourceCulture);
 			}
 		}
 
@@ -1485,6 +1540,17 @@ namespace Domain.Shared.Resources
 			get
 			{
 				return ResourceManager.GetString("TitleInContactUsPage", resourceCulture);
+			}
+		}
+
+		/// <summary>
+		///   Looks up a localized string similar to To Date.
+		/// </summary>
+		public static string ToDate
+		{
+			get
+			{
+				return ResourceManager.GetString("ToDate", resourceCulture);
 			}
 		}
 

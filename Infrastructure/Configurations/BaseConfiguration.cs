@@ -10,6 +10,8 @@ internal class BaseConfiguration<T> : IEntityTypeConfiguration<T>
 {
 	public virtual void Configure(EntityTypeBuilder<T> builder)
 	{
+		//*************************
+
 		#region Id
 
 		builder
@@ -36,5 +38,7 @@ internal class BaseConfiguration<T> : IEntityTypeConfiguration<T>
 			;
 
 		#endregion /InsertDateTime
+
+		//*************************
 	}
 }

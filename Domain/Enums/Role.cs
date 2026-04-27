@@ -6,7 +6,7 @@ namespace Domain.Enums;
 public enum Role
 {
 	/// <summary>
-	/// برنامه نویس
+	/// برنامه‌نویس
 	/// </summary>
 	[Display(Description = nameof(DataDictionary.Developer))]
 	Developer = 0,

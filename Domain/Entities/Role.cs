@@ -19,12 +19,12 @@ public class Role() : Seedwork.BaseEntity
 		(AllowEmptyStrings = false,
 		ErrorMessageResourceType = typeof(Validations),
 		ErrorMessageResourceName = nameof(Validations.Required))]
-	[Display(Name = nameof(DataDictionary.RoleNumber))]
+	[Display(Name = nameof(DataDictionary.RoleNumber), ResourceType = typeof(DataDictionary))]
 	public Enums.Role Number { get; set; }
 
 	#endregion /Number
 
-	//**************************************************
+	//*************************
 
 	#region Name
 	/// <summary>
@@ -32,7 +32,7 @@ public class Role() : Seedwork.BaseEntity
 	/// </summary>
 
 	[NotMapped]
-	[Display(Name = nameof(DataDictionary.RoleName))]
+	[Display(Name = nameof(DataDictionary.RoleName), ResourceType = typeof(DataDictionary))]
 	public string? Name
 	{
 		get
@@ -47,7 +47,7 @@ public class Role() : Seedwork.BaseEntity
 
 	#endregion /Name
 
-	//**************************************************
+	//*************************
 
 	#region Description
 
@@ -58,22 +58,23 @@ public class Role() : Seedwork.BaseEntity
 		(maximumLength: Utility.Const.DescriptionMaxLength,
 		ErrorMessageResourceType = typeof(Validations),
 		ErrorMessageResourceName = nameof(Validations.StringLength))]
-	[Display(Name = nameof(DataDictionary.Description))]
+	[Display(Name = nameof(DataDictionary.Description), ResourceType = typeof(DataDictionary))]
 	public string Description { get; set; } = null!;
 
 	#endregion /Description
 
-	//**************************************************
+	//*************************
 
 	#region Employees
 
 	/// <summary>
 	///	لیست کارمندان
 	/// </summary>
+	[Display(Name = nameof(DataDictionary.Employees), ResourceType = typeof(DataDictionary))]
 	public virtual IList<Employee> Employees { get; set; } = [];
 
 	#endregion /Employees
 
-	//**************************************************
+	//*************************
 
 }

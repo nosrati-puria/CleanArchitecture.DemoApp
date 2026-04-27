@@ -13,7 +13,7 @@ public enum LeaveStatus
 
 
 	/// <summary>
-	/// پذیرفته شده
+	/// تایید شده
 	/// </summary>
 	[Display(Description = nameof(DataDictionary.Approved))]
 	Approved = 1,

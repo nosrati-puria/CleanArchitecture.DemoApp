@@ -549,4 +549,22 @@
   <data name="SigningIn" xml:space="preserve">
     <value>Signing in</value>
   </data>
+  <data name="FromDate" xml:space="preserve">
+    <value>From Date</value>
+  </data>
+  <data name="ToDate" xml:space="preserve">
+    <value>To Date</value>
+  </data>
+  <data name="Reason" xml:space="preserve">
+    <value>Reason</value>
+  </data>
+  <data name="EmployeeId" xml:space="preserve">
+    <value>Employee Id</value>
+  </data>
+  <data name="LeaveRequests" xml:space="preserve">
+    <value>Leave Requests</value>
+  </data>
+  <data name="Employees" xml:space="preserve">
+    <value>Employees</value>
+  </data>
 </root>

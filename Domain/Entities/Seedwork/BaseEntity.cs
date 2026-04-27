@@ -1,4 +1,5 @@
 ﻿using System;
+using Domain.Shared.Resources;
 using Domain.Shared.Resources.Messages;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -33,6 +34,7 @@ public abstract class BaseEntity
 		ErrorMessageResourceType = typeof(Validations),
 		ErrorMessageResourceName = nameof(Validations.Required))]
 	[DatabaseGenerated(databaseGeneratedOption: DatabaseGeneratedOption.None)]
+	[Display(Name = nameof(DataDictionary.Id), ResourceType = typeof(DataDictionary))]
 	public Guid Id { get; private set; }
 
 	#endregion /Id
@@ -49,6 +51,7 @@ public abstract class BaseEntity
 		ErrorMessageResourceType = typeof(Validations),
 		ErrorMessageResourceName = nameof(Validations.Required))]
 	[DatabaseGenerated(databaseGeneratedOption: DatabaseGeneratedOption.None)]
+	[Display(Name = nameof(DataDictionary.InsertDateTime), ResourceType = typeof(DataDictionary))]
 	public DateTimeOffset InsertDateTime { get; private set; }
 
 	#endregion /InsertDateTime

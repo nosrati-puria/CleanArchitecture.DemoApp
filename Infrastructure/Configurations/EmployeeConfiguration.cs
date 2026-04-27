@@ -14,7 +14,7 @@ internal class EmployeeConfiguration() : BaseConfiguration<Employee>
 
 		builder.ToTable(name: nameof(Employee), schema: "HR");
 
-		//**************************************************
+		//*************************
 
 		#region Username
 
@@ -34,7 +34,7 @@ internal class EmployeeConfiguration() : BaseConfiguration<Employee>
 
 		#endregion /Username
 
-		//**************************************************
+		//*************************
 
 		#region Password
 
@@ -49,7 +49,7 @@ internal class EmployeeConfiguration() : BaseConfiguration<Employee>
 
 		#endregion /Password
 
-		//**************************************************
+		//*************************
 
 		#region FullName
 
@@ -69,7 +69,7 @@ internal class EmployeeConfiguration() : BaseConfiguration<Employee>
 
 		#endregion /FullName
 
-		//**************************************************
+		//*************************
 
 		#region Email
 
@@ -88,7 +88,7 @@ internal class EmployeeConfiguration() : BaseConfiguration<Employee>
 
 		#endregion /Email
 
-		//**************************************************
+		//*************************
 
 		#region CellPhoneNumber
 
@@ -106,7 +106,7 @@ internal class EmployeeConfiguration() : BaseConfiguration<Employee>
 
 		#endregion /CellPhoneNumber
 
-		//**************************************************
+		//*************************
 
 		#region LeaveRequests
 
@@ -117,5 +117,7 @@ internal class EmployeeConfiguration() : BaseConfiguration<Employee>
 			;
 
 		#endregion /LeaveRequests
+
+		//*************************
 	}
 }

@@ -22,12 +22,12 @@ public class Employee() : Seedwork.BaseEntity
 		MinimumLength = Utility.Const.UsernameMinLength,
 		ErrorMessageResourceType = typeof(Validations),
 		ErrorMessageResourceName = nameof(Validations.StringLength))]
-	[Display(Name = nameof(DataDictionary.Username))]
+	[Display(Name = nameof(DataDictionary.Username), ResourceType = typeof(DataDictionary))]
 	public string Username { get; set; } = null!;
 
 	#endregion /Username
 
-	//**************************************************
+	//*************************
 
 	#region Password
 
@@ -43,12 +43,12 @@ public class Employee() : Seedwork.BaseEntity
 		MinimumLength = Utility.Const.PasswordMinLength,
 		ErrorMessageResourceType = typeof(Validations),
 		ErrorMessageResourceName = nameof(Validations.StringLength))]
-	[Display(Name = nameof(DataDictionary.Password))]
+	[Display(Name = nameof(DataDictionary.Password), ResourceType = typeof(DataDictionary))]
 	public string Password { get; set; } = null!;
 
 	#endregion /Password
 
-	//**************************************************
+	//*************************
 
 	#region FullName
 
@@ -60,12 +60,12 @@ public class Employee() : Seedwork.BaseEntity
 		MinimumLength = Utility.Const.FullNameMinLength,
 		ErrorMessageResourceType = typeof(Validations),
 		ErrorMessageResourceName = nameof(Validations.StringLength))]
-	[Display(Name = nameof(DataDictionary.FullName))]
+	[Display(Name = nameof(DataDictionary.FullName), ResourceType = typeof(DataDictionary))]
 	public string FullName { get; set; } = null!;
 
 	#endregion /FullName
 
-	//**************************************************
+	//*************************
 
 	#region Email
 
@@ -77,12 +77,12 @@ public class Employee() : Seedwork.BaseEntity
 		ErrorMessageResourceType = typeof(Validations),
 		ErrorMessageResourceName = nameof(Validations.EmailAddress),
 		MatchTimeoutInMilliseconds = 0)]
-	[Display(Name = nameof(DataDictionary.EmailAddress))]
+	[Display(Name = nameof(DataDictionary.EmailAddress), ResourceType = typeof(DataDictionary))]
 	public string Email { get; set; } = null!;
 
 	#endregion /Email
 
-	//**************************************************
+	//*************************
 
 	#region CellPhoneNumber
 
@@ -99,18 +99,19 @@ public class Employee() : Seedwork.BaseEntity
 
 	#endregion /CellPhoneNumber
 
-	//**************************************************
+	//*************************
 
 	#region LeaveRequests
 
 	/// <summary>
-	/// درخواست مرخصی
+	/// درخواست‌های مرخصی
 	/// </summary>
+	[Display(Name = nameof(DataDictionary.LeaveRequests), ResourceType = typeof(DataDictionary))]
 	public ICollection<LeaveRequest> LeaveRequests { get; } = [];
 
 	#endregion /LeaveRequests
 
-	//**************************************************
+	//*************************
 
 	#region Role
 
@@ -121,12 +122,12 @@ public class Employee() : Seedwork.BaseEntity
 		(AllowEmptyStrings = false,
 		ErrorMessageResourceType = typeof(Validations),
 		ErrorMessageResourceName = nameof(Validations.Required))]
-	[Display(Name = nameof(DataDictionary.Role))]
+	[Display(Name = nameof(DataDictionary.Role), ResourceType = typeof(DataDictionary))]
 	public virtual Role? Role { get; set; }
 	public Guid RoleId { get; set; }
 
 	#endregion /Role
 
-	//**************************************************
+	//*************************
 
 }

@@ -549,4 +549,22 @@
   <data name="SigningIn" xml:space="preserve">
     <value>در حال ورود</value>
   </data>
+  <data name="FromDate" xml:space="preserve">
+    <value>از تاریخِ</value>
+  </data>
+  <data name="ToDate" xml:space="preserve">
+    <value>تا تاریخِ</value>
+  </data>
+  <data name="Reason" xml:space="preserve">
+    <value>علت</value>
+  </data>
+  <data name="EmployeeId" xml:space="preserve">
+    <value>شناسه کارمندی</value>
+  </data>
+  <data name="LeaveRequests" xml:space="preserve">
+    <value>درخواست‌های مرخصی</value>
+  </data>
+  <data name="Employees" xml:space="preserve">
+    <value>کارمندان</value>
+  </data>
 </root>
