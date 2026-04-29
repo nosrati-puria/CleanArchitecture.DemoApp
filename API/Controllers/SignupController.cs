@@ -28,7 +28,7 @@ public class SignupController(IEmployeeRepository employeeRepository) : Controll
 			Username = model.Username,
 			Password = Utility.Hasher.GetHash(input: model.Password),
 			FullName = model.FullName,
-			Email = model.Email,
+			Email = model.EmailAddress,
 			CellPhoneNumber = model.CellPhoneNumber,
 			Role = new Role()
 			{

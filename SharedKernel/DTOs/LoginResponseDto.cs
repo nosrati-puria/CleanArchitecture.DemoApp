@@ -1,7 +1,15 @@
-﻿namespace SharedKernel.DTOs;
+﻿using System;
+
+namespace SharedKernel.DTOs;
 
 public record LoginResponseDto()
 {
+	/// <summary>
+	/// شناسه کاربری
+	/// </summary>
+	public Guid UserID { get; set; }
+
+
 	/// <summary>
 	/// توکن
 	/// </summary>

@@ -5,3 +5,4 @@ For next Step we should:
 3- Log
 4- Sign out button
 5- Authorization
+6- Error handling in sign in page

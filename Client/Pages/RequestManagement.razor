@@ -1,0 +1,91 @@
+﻿@page "/RequestManagement/{UserID:Guid}"
+
+@using SharedKernel.DTOs;
+@using Domain.Shared.Resources;
+@using Domain.Shared.Resources.Messages;
+
+@inject IJSRuntime JS
+@inject HttpClient Http
+@inject NavigationManager Navigation
+
+<h3 class="text-center mt-5">@(DataDictionary.LeaveRequests)</h3>
+
+<div class="d-flex justify-content-center mt-4">
+	<div class="card p-4 shadow" style="width:350px;">
+		<EditForm Model="UserID" OnValidSubmit="ShowRequests">
+			<DataAnnotationsValidator />
+			<ValidationSummary />
+
+
+			<table class="table table-bordered table-striped table-hover">
+				<thead class="table-dark">
+					<tr>
+						<th>ستون ۱</th>
+						<th>ستون ۲</th>
+						<th>ستون ۳</th>
+						<th>ستون ۴</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>ردیف ۱ - سلول ۱</td>
+						<td>ردیف ۱ - سلول ۲</td>
+						<td>ردیف ۱ - سلول ۳</td>
+						<td>ردیف ۱ - سلول ۴</td>
+					</tr>
+					<tr>
+						<td>ردیف ۲ - سلول ۱</td>
+						<td>ردیف ۲ - سلول ۲</td>
+						<td>ردیف ۲ - سلول ۳</td>
+						<td>ردیف ۲ - سلول ۴</td>
+					</tr>
+					<tr>
+						<td>ردیف ۳ - سلول ۱</td>
+						<td>ردیف ۳ - سلول ۲</td>
+						<td>ردیف ۳ - سلول ۳</td>
+						<td>ردیف ۳ - سلول ۴</td>
+					</tr>
+				</tbody>
+			</table>
+			<tbody>
+				<tr>
+					@foreach (var request in Employee.LeaveRequests)
+					{
+						<td>
+							<label class="form-label">@(request.FromDate)</label>
+						</td>
+						<td>
+							<label class="form-label">@(request.ToDate)</label>
+						</td>
+						<td>
+							<label class="form-label">@(request.Status)</label>
+						</td>
+					}
+				</tr>
+			</tbody>
+
+
+		</EditForm>
+
+		@if (!string.IsNullOrEmpty(errorMessage))
+		{
+			<div class="alert alert-danger mt-3 error">@errorMessage</div>
+		}
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public Guid UserID { get; set; }
+
+	public Domain.Entities.Employee Employee { get; set; }
+
+	private bool isLoading = false;
+	private string errorMessage = string.Empty;
+	private readonly LoginRequestDto loginModel = new();
+
+	public async Task ShowRequests()
+	{
+		var response = await Http.PostAsJsonAsync("api/LeaveRequests/GetList", UserID);
+	}
+}

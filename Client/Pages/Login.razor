@@ -82,7 +82,7 @@
 
 			await JS.InvokeVoidAsync("localStorage.setItem", "jwt", result.Token);
 
-			Navigation.NavigateTo("/");
+			Navigation.NavigateTo($"/RequestManagement/{result.UserID}");
 		}
 		catch (JSException jsEx)
 		{

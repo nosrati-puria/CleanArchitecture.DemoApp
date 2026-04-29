@@ -35,7 +35,8 @@ public static class Program
 
 		var builder = WebApplication.CreateBuilder(options: webApplication);
 
-		// Add services to the container:
+		#region Add services to the container
+
 		builder.Services.AddControllers();
 		builder.Services.AddEndpointsApiExplorer();
 		builder.Services.AddSwaggerGen();
@@ -115,6 +116,8 @@ public static class Program
 		builder.Services.AddScoped<ILoginService, LoginService>();
 		builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
+		#endregion /Add services to the container
+
 		var app = builder.Build();
 
 		using (var scope = app.Services.CreateScope())
@@ -122,6 +125,8 @@ public static class Program
 			var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 			await appDbContext.Database.MigrateAsync();
 		}
+
+		#region Middlewares
 
 		if (app.Environment.IsDevelopment())
 		{
@@ -153,5 +158,7 @@ public static class Program
 
 		await
 			app.RunAsync();
+
+		#endregion /Middlewares
 	}
 }

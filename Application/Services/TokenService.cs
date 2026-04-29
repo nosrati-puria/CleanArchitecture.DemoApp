@@ -29,22 +29,20 @@ public class TokenService(IOptions<JwtOptions> options) : ITokenService
 		var issuer = Options.Value.Issuer;
 		var audience = Options.Value.Audience;
 		var secretKey = Options.Value.SecretKey;
-
-		var expiration = DateTime.UtcNow
-			.AddMinutes(value: Options.Value.ExpirationInMinutes);
+		var expiration = DateTime.UtcNow.AddMinutes(value: Options.Value.ExpirationInMinutes);
 
 		var securityKey = new SymmetricSecurityKey(key: Encoding.UTF8.GetBytes(secretKey!));
 		var credentials = new SigningCredentials(key: securityKey, algorithm: SecurityAlgorithms.HmacSha256);
 
-		var token = new JwtSecurityToken(
-			issuer: issuer,
+		var token = new JwtSecurityToken
+			(issuer: issuer,
 			audience: audience,
 			claims: claims,
 			expires: expiration,
-			signingCredentials: credentials
-		);
+			signingCredentials: credentials);
 
 		var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+
 		return jwt;
 	}
 }

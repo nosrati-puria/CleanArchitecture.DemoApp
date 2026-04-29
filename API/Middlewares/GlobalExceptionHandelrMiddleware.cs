@@ -21,9 +21,10 @@ public class GlobalExceptionHandelrMiddleware(RequestDelegate next)
 		}
 		catch (Exception ex)
 		{
-			//Todo
+			//To do
 			//Log
 
+			ex.ToString();
 			httpContext.Response.Redirect
 				(location: "/Errors/Error", permanent: false);
 		}

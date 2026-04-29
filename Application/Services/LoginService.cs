@@ -25,15 +25,28 @@ public class LoginService(IEmployeeRepository employeeRepository, ITokenService 
 		var employee = await
 			EmployeeRepo.GetByUsername(username: request.Username);
 
-		if (employee is null || !CheckPassword(inputPlainText: request.Password, storedHashedPassword: employee.Password))
+		if (employee is null)
 		{
-			return ServiceResult<LoginResponseDto>.Failed(message: Errors.InvalidUsernameOrPassword, statusCode: 401);
+			return
+				ServiceResult<LoginResponseDto>
+					.Failed(message: Errors.InvalidUsernameOrPassword, statusCode: 401);
+		}
+
+		var isPasswordCorrect = CheckPassword
+			(inputPlainText: request.Password, storedHashedPassword: employee.Password);
+
+		if (!isPasswordCorrect)
+		{
+			return
+				ServiceResult<LoginResponseDto>
+					.Failed(message: Errors.InvalidUsernameOrPassword, statusCode: 401);
 		}
 
 		var token = _tokenService.GenerateToken(employee);
 
 		var response = new LoginResponseDto
 		{
+			UserID = employee.Id,
 			Token = token
 		};
 
@@ -42,8 +55,9 @@ public class LoginService(IEmployeeRepository employeeRepository, ITokenService 
 
 	private static bool CheckPassword(string inputPlainText, string storedHashedPassword)
 	{
-		var hashOfEnteredPassword = Utility.Hasher.GetHash(input: inputPlainText);
+		var isPasswordCorrect =
+			Utility.Hasher.GetHash(input: inputPlainText) == storedHashedPassword;
 
-		return hashOfEnteredPassword == storedHashedPassword;
+		return isPasswordCorrect;
 	}
 }

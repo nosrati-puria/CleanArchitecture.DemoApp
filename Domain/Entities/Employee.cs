@@ -107,7 +107,7 @@ public class Employee() : Seedwork.BaseEntity
 	/// درخواست‌های مرخصی
 	/// </summary>
 	[Display(Name = nameof(DataDictionary.LeaveRequests), ResourceType = typeof(DataDictionary))]
-	public ICollection<LeaveRequest> LeaveRequests { get; } = [];
+	public virtual ICollection<LeaveRequest> LeaveRequests { get; } = [];
 
 	#endregion /LeaveRequests
 

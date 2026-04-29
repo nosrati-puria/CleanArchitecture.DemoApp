@@ -1,35 +1,30 @@
-﻿using Domain.Interfaces;
-using Application.Interfaces;
+﻿using System;
+using Domain.Interfaces;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class LeaveRequestsController
-	//(
-	//IEmployeeRepository employeeRepository,
-	//ILeaveRequestService leaveRequestService,
-	//ILeaveRequestRepository leaveRequestRepository
-	//)
-	: ControllerBase
+[Authorize]
+public class LeaveRequestsController(ILeaveRequestRepository requestRepo) : ControllerBase
 {
-	//private readonly ILeaveRequestService
-	//    _leaveRequestService = leaveRequestService;
+	private readonly ILeaveRequestRepository _requestRepo = requestRepo;
 
-	//private readonly IEmployeeRepository
-	//    _employeeRepository = employeeRepository;
 
-	//private readonly ILeaveRequestRepository
-	//    _leaveRequestRepository = leaveRequestRepository;
-
-	[HttpGet(Name = nameof(GetList))]
-	public IActionResult GetList()
+	/// <summary>
+	/// دریافت لیست درخواست‌ها برای کاربر مشخص
+	/// </summary>
+	/// <param name="userID"></param>
+	/// <returns></returns>
+	[HttpGet(template: nameof(GetList))]
+	public async Task<ActionResult> GetList(Guid userID)
 	{
-		//var x = _leaveRequestService.GetAllAsync();
-		//var a = _leaveRequestRepository.GetAllAsync();
-		//var b = _employeeRepository.GetAllAsync();
+		var requestList = await
+			_requestRepo.GetByEmployeeIdAsync(userID);
 
-		return Ok();
+		return Ok(requestList);
 	}
 }
